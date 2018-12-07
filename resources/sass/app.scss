@@ -1,12 +1,65 @@
 
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
 
 // Variables
 @import 'variables';
 
+
+@import '~compass-mixins/lib/compass';
+@import '~compass-mixins/lib/animate';
+
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+/* === Template mixins === */
+
+@import "mixins/animation";
+@import "mixins/background";
+@import "mixins/blockqoute";
+@import "mixins/badges";
+@import "mixins/buttons";
+@import "mixins/cards";
+@import "mixins/misc";
+@import "mixins/text";
+/*-------------------------------------------------------------------*/
+
+/* === Core Styles === */
+
+@import "reset";
+@import "fonts";
+@import "functions";
+@import "sidebar";
+@import "navbar";
+@import "typography";
+@import "misc";
+@import "footer";
+@import "utilities";
+@import "demo";
+@import "dashboard";
+/*-------------------------------------------------------------------*/
+
+/* === Components === */
+
+@import "components/badges";
+@import "components/bootstrap-progress";
+@import "components/buttons";
+@import "components/cards";
+@import "components/checkbox-radio";
+@import "components/dropdown";
+@import "components/forms";
+@import "components/icons";
+@import "components/lists";
+@import "components/nav";
+@import "components/new-account";
+@import "components/preview";
+@import "components/tables";
+/*-------------------------------------------------------------------*/
+
+/* === Landing screens === */
+
+@import "landing-screens/auth";
+@import "landing-screens/error";
 
 .navbar-laravel {
   background-color: #fff;
