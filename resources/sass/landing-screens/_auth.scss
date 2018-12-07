@@ -14,43 +14,34 @@
 			background: $white;
 			padding: 40px 40px 10px;
 			@include border-radius(4px);
-			box-shadow: 0 -25px 37.7px 11.3px rgba(8, 143, 220, 0.07);
+      box-shadow: 0 -25px 37.7px 11.3px rgba(8, 143, 220, 0.07);
+      .form-group.has-error{
+        .input-group{
+          border-color: 1px solid $border-color-error;
+        }
+      }
 			.form-group {
 				.input-group {
 					height: 44px;
 					.form-control {
 						border: 1px solid darken($border-color, 5%);
-						border-right: none;
-						@include border-radius(6px 0 0 6px);
+
+						@include border-radius(6px);
 						&:focus {
-							border-right: none;
 							border-color: darken($border-color, 5%);
 						}
-					}
-					.input-group-append {
-						border-left: none;
-						.input-group-text {
-							@include border-radius(0 6px 6px 0);
-							border-left: none;
-							border-color: darken($border-color, 5%);
-							color: #b6b6b6;
-						}
-					}
-				}
+          }
+        }
+
 				.submit-btn {
 					font-family: $type-1;
 					font-size: 13px;
 					padding: 12px 8px;
-					font-weight: 600;
+          font-weight: 600;
+          background: $blue-teal-gradient;
 				}
-			}
-			.g-login {
-				border: 1px solid $border-color;
-				padding: 13px;
-				font-size: 12px;
-				font-weight: 600;
-				background: transparent;
-			}
+      }
+
 		}
 		.auth-footer {
 			list-style-type: none;

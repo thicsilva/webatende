@@ -154,6 +154,11 @@
       }
     }
   }
+  &.fixed-top {
+    +.page-body-wrapper {
+      padding-top: $navbar-height;
+    }
+  }
 }
 
 @media (max-width:991px) {

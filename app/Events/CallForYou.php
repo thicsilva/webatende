@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class CallForYou
+class CallForYou implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -31,6 +31,6 @@ class CallForYou
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new Channel('webatende-call');
     }
 }

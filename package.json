@@ -22,5 +22,9 @@
         "popper.js": "^1.12",
         "simple-line-icons": "^2.4.1",
         "vue": "^2.5.17"
+    },
+    "dependencies": {
+        "laravel-echo": "^1.5.1",
+        "pusher-js": "^4.3.1"
     }
 }
