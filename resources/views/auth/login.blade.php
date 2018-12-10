@@ -28,14 +28,24 @@
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                   <label class="label">Email</label>
                   <div class="input-group">
-                    <input type="email" class="form-control" placeholder="email@email.com" autocomplete="off">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="email@email.com" autocomplete="off">
                   </div>
+                  @if ($errors->has('email'))
+                    <span class="help-block">
+                      <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                  @endif
                 </div>
-                <div class="form-group">
+                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                   <label class="label">Password</label>
                   <div class="input-group">
-                    <input type="password" class="form-control" placeholder="*********" autocomplete="off">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="*********" autocomplete="off">
                   </div>
+                  @if ($errors->has('password'))
+                    <span class="help-block">
+                      <strong>{{ $errors->first('password') }}</strong>
+                    </span>
+                  @endif
                 </div>
                 <div class="form-group">
                   <button class="btn btn-primary submit-btn btn-block">Login</button>

@@ -15,7 +15,7 @@
     <!-- Favicon -->
     <link href="{{ asset('images/favicon.png') }}" rel="shortcut icon">
 </head>
-<body>
+<body class="sidebar-dark">
   <div class="container-scroller" id="app">
     @include('layouts.partials.navbar')
     <div class="container-fluid page-body-wrapper">
