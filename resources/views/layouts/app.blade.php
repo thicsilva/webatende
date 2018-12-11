@@ -14,6 +14,7 @@
 
     <!-- Favicon -->
     <link href="{{ asset('images/favicon.png') }}" rel="shortcut icon">
+
 </head>
 <body class="sidebar-dark">
   <div class="container-scroller" id="app">
@@ -31,8 +32,10 @@
   <!-- container-scroller -->
 
   <!-- Scripts -->
-  <script src="{{ asset('js/manifest.js') }}" defer></script>
-  <script src="{{ asset('js/vendor.js') }}" defer></script>
-  <script src="{{ asset('js/app.js') }}" defer></script>
+  <script src="{{ asset('js/manifest.js') }}"></script>
+  <script src="{{ asset('js/vendor.js') }}"></script>
+  <script src="{{ asset('js/app.js') }}"></script>
+  <!-- Page Scripts -->
+  @yield('js')
 </body>
 </html>

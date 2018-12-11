@@ -1,30 +1,25 @@
 <!-- navbar -->
 <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
   <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-    <a class="navbar-brand brand-logo" href="index.html">
-      <img src="images/logo.svg" alt="logo" />
+    <a class="navbar-brand brand-logo" href="{{ route('home')}}">
+      <img src="{{ asset('images/logo.png') }}" alt="logo" />
+      <span class="brand-name"> WebAtende</span>
     </a>
-    <a class="navbar-brand brand-logo-mini" href="index.html">
-      <img src="images/logo-mini.svg" alt="logo" />
+    <a class="navbar-brand brand-logo-mini" href="{{ route('home') }}">
+      <img src="{{ asset('images/logo.png') }}" alt="logo" />
     </a>
   </div>
   <div class="navbar-menu-wrapper d-flex align-items-center">
-    <button class="navbar-toggler align-self-center" type="button" data-toggle="minimize">
-      <span class="mdi mdi-menu"></span>
-    </button>
     <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
-      <li class="nav-item">
-        <a href="#" class="nav-link">Schedule
-          <span class="badge badge-primary ml-1">New</span>
+      <li class="nav-item {{ Request::is('schedule*')?'active':''}}">
+        <a href="#" class="nav-link">
+          <i class="mdi mdi-calendar-clock"></i>Agendamentos
         </a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item {{ Request::is('report*')?'active':''}}">
         <a href="#" class="nav-link">
-          <i class="mdi mdi-elevation-rise"></i>Reports</a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link">
-          <i class="mdi mdi-bookmark-plus-outline"></i>Score</a>
+          <i class="mdi mdi-elevation-rise"></i>Relatórios
+        </a>
       </li>
     </ul>
     <ul class="navbar-nav navbar-nav-right">
@@ -32,8 +27,8 @@
       <notification></notification>
       <li class="nav-item dropdown d-none d-xl-inline-block">
         <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-          <span class="profile-text">Hello, Richard V.Welsh !</span>
-          <img class="img-xs rounded-circle" src="images/faces/face1.jpg" alt="Profile image">
+          <span class="profile-text">Olá, {{ Auth::user()->name }} !</span>
+          <img class="img-xs rounded-circle" src="{{ asset('images/faces/face1.jpg') }}" alt="Profile image">
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
           <a class="dropdown-item p-0">
@@ -49,9 +44,11 @@
               </div>
             </div>
           </a>
+          @if(Auth::user()->is_admin)
           <a class="dropdown-item mt-2">
             Manage Accounts
           </a>
+          @endif
           <a class="dropdown-item">
             Change Password
           </a>
