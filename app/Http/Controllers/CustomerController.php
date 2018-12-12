@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\InsertCustomerRequest;
+use App\Http\Requests\CustomerRequest;
 use App\Customer;
+use DataTables;
 
 class CustomerController extends Controller
 {
     public function index()
     {
-        return view('customer.index');
+        $customers = Customer::all();
+        return view('customer.index', compact('customers'));
     }
 
     public function create()
@@ -18,11 +20,11 @@ class CustomerController extends Controller
         return view('customer.create');
     }
 
-    public function store(InsertCustomerRequest $request)
+    public function store(CustomerRequest $request)
     {
-
-        $customer = Customer::create($request->all());
-        return redirect()->route('customer.index')->with(['success', 'Cliente cadastrado com sucesso!']);
+        $request->commit();
+        session()->flash('alert', ['type' => 'success', 'message' => 'Cliente cadastrado com sucesso!']);
+        return redirect()->route('customer.index');
     }
 
     public function edit(Customer $customer)
@@ -31,10 +33,11 @@ class CustomerController extends Controller
         return view('customer.edit', compact('customer'));
     }
 
-    public function update(Request $request, Customer $customer)
+    public function update(CustomerRequest $request, Customer $customer)
     {
-        $customer->fill($request->all());
-        return redirect()->route('customer.index')->with(['success','Cliente atualizado com sucesso!']);
+        $request->update($customer);
+        session()->flash('alert', ['type' => 'success', 'message' => 'Cliente atualizado com sucesso!']);
+        return redirect()->route('customer.index');
     }
 
     public function delete(Customer $customer)
@@ -52,4 +55,5 @@ class CustomerController extends Controller
             ->get();
         return json_encode($customer);
     }
+
 }

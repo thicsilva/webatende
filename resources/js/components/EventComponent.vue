@@ -13,7 +13,7 @@
       <div class="dropdown-divider"></div>
       <a class="dropdown-item preview-item">
         <div class="preview-thumbnail">
-          <img src="images/faces/face4.jpg" alt="image" class="profile-pic">
+          <img src="/images/faces/face4.jpg" alt="image" class="profile-pic">
         </div>
         <div class="preview-item-content flex-grow">
           <h6 class="preview-subject ellipsis font-weight-medium text-dark">David Grey
@@ -27,7 +27,7 @@
       <div class="dropdown-divider"></div>
       <a class="dropdown-item preview-item">
         <div class="preview-thumbnail">
-          <img src="images/faces/face2.jpg" alt="image" class="profile-pic">
+          <img src="/images/faces/face2.jpg" alt="image" class="profile-pic">
         </div>
         <div class="preview-item-content flex-grow">
           <h6 class="preview-subject ellipsis font-weight-medium text-dark">Tim Cook
@@ -41,7 +41,7 @@
       <div class="dropdown-divider"></div>
       <a class="dropdown-item preview-item">
         <div class="preview-thumbnail">
-          <img src="images/faces/face3.jpg" alt="image" class="profile-pic">
+          <img src="/images/faces/face3.jpg" alt="image" class="profile-pic">
         </div>
         <div class="preview-item-content flex-grow">
           <h6 class="preview-subject ellipsis font-weight-medium text-dark"> Johnson

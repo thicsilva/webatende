@@ -12,6 +12,9 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <!-- Aditional CSS -->
+    @yield('css')
+
     <!-- Favicon -->
     <link href="{{ asset('images/favicon.png') }}" rel="shortcut icon">
 
