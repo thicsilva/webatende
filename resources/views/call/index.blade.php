@@ -1,9 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Clientes')
-@section('css')
+@section('title', 'Chamadas para você')
 
-@stop
 @section('content')
 <!-- content-wrapper -->
 <div class="content-wrapper">
@@ -21,7 +19,7 @@
       <div class="card">
         <div class="card-body">
           <h4 class="class-title">Pesquisar</h4>
-          <form action="{{ route('customer.index') }}" method="get" id="search-customer">
+          <form class="forms-sample" action="{{ route('call.index') }}" method="get" id="search-call">
             <div class="row mb-5">
               <div class="col">
                 <input type="text" name="name" id="name" class="form-control" placeholder="Razão" value="{{ Request::input('name') }}">
@@ -44,51 +42,68 @@
             </div>
           </form>
           <div class="table-responsive">
-            <table class="table table-striped table-responsive" id="table">
+            <!-- table component -->
+            <table class="table table-striped" id="table">
               <thead>
                 <tr>
-                  <th>Razão Social</th>
-                  <th>Fantasia</th>
-                  <th>CNPJ/CPF</th>
-                  <th>Fone</th>
-                  <th>Cidade</th>
+                  <th>Cliente</th>
+                  <th>Contato</th>
+                  <th>Status</th>
+                  <th>Para</th>
+                  <th>Data</th>
                   <th>Ações</th>
                 </tr>
               </thead>
               <tbody>
-              @if (empty($customers))
-                <h4 class="class-title">Não há registros</h4>
-              @endif
-              @foreach($customers as $customer)
-                <tr class="{{ $customer->has_contract?'table-success':''}} {{$customer->has_restriction?'table-danger':'' }}">
-                  <td>{{ $customer->name }}</td>
-                  <td>{{ $customer->fantasy_name }}</td>
-                  <td>{{ $customer->doc_number }}</td>
-                  <td>{{ $customer->phone }}</td>
-                  <td>{{ $customer->city }}</td>
+                @foreach($calls as $call)
+                <tr>
+                  <td>
+                    <a href="{{ route('call.show', $call->id) }}">{{ $call->customer->name }}</a>
+                  </td>
+                  <td>{{ $call->contact }}</td>
+                  <td>
+                    <span class="status-indicator {{$call->status?'online':'away'}}"></span>
+                    {{$call->status?'Encerrada':'Aberta'}}
+                  </td>
+                  <td> {{ $call->toUser->name}}</td>
+                  <td> {{ $call->created_at->format('d/m/Y h:i') }}</td>
                   <td>
                     <div class="btn-group" role="group">
-                      <a href="{{ route('customer.edit', $customer->id)}}" class="btn btn-icons btn-inverse-primary" title="Editar">
-                        <i class="mdi mdi-pencil"></i>
+                      @if (($call->to_user_id == auth()->user()->id or auth()->user()->is_admin) and (!$call->status))
+                      <form action="{{ route('call.close', $call->id) }}" method="post">
+                        @csrf
+                        <button class="btn btn-inverse-primary" type="submit">
+                          <i class="mdi mdi-close-outline"></i>
+                          Encerrar
+                        </button>
+                      </form>
+                      @else
+                      <a href="{{ route('call.show', $call->id) }}" class="btn btn-inverse-success">
+                        <i class="mdi mdi-eye"></i>
+                        Visualizar
                       </a>
+                      @endif
                     </div>
+                    @if($call->fromUser->id==auth()->user()->id)
                     <div class="btn-group" role="group">
-                      <form action="{{ route('customer.delete', $customer->id) }}" method="post" class="form-inline">
-                          @csrf
-                          @method('DELETE')
-                          <button class="btn btn-icons btn-inverse-danger" type="submit" title="Excluir">
-                            <i class="mdi mdi-delete"></i>
-                          </button>
-                        </form>
+                      <form action="{{ route('call.delete', $call->id) }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-inverse-danger" type="submit">
+                          <i class="mdi mdi-delete"></i>
+                            Excluir
+                        </button>
+                      </form>
                     </div>
+                    @endif
                   </td>
                 </tr>
-              @endforeach
+                @endforeach
               </tbody>
             </table>
           </div>
           <div class="row mt-5">
-            {{ $customers->appends(Request::except('page'))->links()}}
+            {{ $calls->appends(Request::except('page'))->links()}}
           </div>
         </div>
       </div>
@@ -104,7 +119,19 @@
       'use strict';
       $(function(){
         let docNumber = document.getElementById('doc_number');
+        let phone = document.getElementById('phone');
         Inputmask({"mask": ['999.999.999-99', '99.999.999/9999-99'], "keepstatic":true}).mask(docNumber);
+        Inputmask({"mask": ['(99)9999-9999', '(99)99999-9999'], "keepstatic":true}).mask(phone);
+        $('#restriction').hide();
+
+        $('#has_restriction').on('click', function(){
+          if (this.checked){
+            $('#restriction').show();
+          } else {
+            $('#restriction').hide();
+          }
+        });
+
         $('.btn-inverse-danger').each(function(){
           $(this).on('click', function(e){
             e.preventDefault();

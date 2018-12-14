@@ -15,47 +15,47 @@
             </div>
           </div>
         </div>
-        <button class="btn btn-success btn-block">Nova chamada
+        <a href="{{route('call.create')}}" class="btn btn-success btn-block">Nova chamada
           <i class="mdi mdi-plus"></i>
-        </button>
+        </a>
       </div>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{{ route('home') }}">
+    <li class="nav-item {{request()->is('home')?'active':''}}">
+      <a class="nav-link " href="{{ route('home') }}">
         <i class="menu-icon mdi mdi-television"></i>
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#ui-customer" aria-expanded="false" aria-controls="ui-customer">
-        <i class="menu-icon mdi mdi-account-group"></i>
+      <a class="nav-link" data-toggle="collapse" href="#ui-customer" aria-expanded="{{request()->is('customer*')?'true':'false'}}" aria-controls="ui-customer">
+        <i class="menu-icon mdi mdi-factory"></i>
         <span class="menu-title">Clientes</span>
         <i class="menu-arrow"></i>
       </a>
-      <div class="collapse" id="ui-customer">
+      <div class="collapse {{request()->is('customer*')?'show':''}}" id="ui-customer">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('customer.create') }}">Novo</a>
+            <a class="nav-link {{request()->is('customer/create')?'active':''}}" href="{{ route('customer.create') }}">Novo</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('customer.index') }}">Todos</a>
+            <a class="nav-link {{request()->is('customer')?'active':''}}" href="{{ route('customer.index') }}">Todos</a>
           </li>
         </ul>
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#ui-call" aria-expanded="false" aria-controls="ui-call">
+      <a class="nav-link" data-toggle="collapse" href="#ui-call" aria-expanded="{{request()->is('call*')?'true':'false'}}" aria-controls="ui-call">
         <i class="menu-icon mdi mdi-phone-classic"></i>
-        <span class="menu-title">Chamados</span>
+        <span class="menu-title">Chamadas</span>
         <i class="menu-arrow"></i>
       </a>
-      <div class="collapse" id="ui-call">
+      <div class="collapse {{request()->is('call*')?'show':''}}" id="ui-call">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item">
-            <a class="nav-link" href="#">Todos</a>
+            <a class="nav-link {{request()->is('call')?'active':''}}" href="{{ route('call.index') }}">Todos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Para Você</a>
+            <a class="nav-link {{request()->is('call/for-you')?'active':''}}" href="{{ route('call.foryou') }}">Para Você</a>
           </li>
         </ul>
       </div>

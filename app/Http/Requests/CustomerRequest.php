@@ -51,7 +51,17 @@ class CustomerRequest extends FormRequest
 
     public function update(Customer $customer)
     {
-        $customer->fill($this->all());
+        $customer->fill([
+            'name' => $this->get('name'),
+            'fantasy_name' => $this->get('fantasy_name'),
+            'doc_number' => $this->get('doc_number'),
+            'city' => $this->get('city'),
+            'phone' => $this->get('phone'),
+            'email' => $this->get('email'),
+            'has_contract' => $this->has('has_contract'),
+            'has_restriction' => $this->has('has_restriction'),
+            'restriction_annotation' => $this->get('restriction_annotation')
+        ]);
         $customer->save();
     }
 

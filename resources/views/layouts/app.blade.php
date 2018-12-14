@@ -26,6 +26,7 @@
       @include('layouts.partials.sidebar')
       <div class="main-panel">
         @yield('content')
+
         @include('layouts.partials.footer')
       </div>
       <!-- main-panel ends -->
@@ -40,5 +41,6 @@
   <script src="{{ asset('js/app.js') }}"></script>
   <!-- Page Scripts -->
   @yield('js')
+
 </body>
 </html>

@@ -12,8 +12,11 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// MDI Fonts
 @import '~mdi/scss/materialdesignicons';
 
+// select2
+@import '~select2/src/scss/core';
 /* === Template mixins === */
 
 @import "mixins/animation";
@@ -56,7 +59,7 @@
 @import "components/new-account";
 @import "components/preview";
 @import "components/tables";
-@import "components/datatables";
+@import "components/select2";
 /*-------------------------------------------------------------------*/
 
 /* === Landing screens === */

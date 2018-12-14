@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class CallForYou implements ShouldBroadcast
+class CallCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,10 +20,11 @@ class CallForYou implements ShouldBroadcast
      * @return void
      */
 
-    public $user;
-    public function __construct($user)
+    public $call;
+
+    public function __construct($call)
     {
-        $this->user = $user;
+        $this->call = $call;
     }
 
     /**
@@ -33,7 +34,23 @@ class CallForYou implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('webatende-call-for-you');
+        return new Channel('calls');
     }
 
+    public function broadcastWith()
+    {
+        return [
+            'id' => $this->call->id,
+            'customer' => [
+                'name' =>$this->call->customer->name,
+            ],
+            'contact' => $this->call->contact,
+            'status' => $this->call->status,
+            'to_user' => [
+                'name' => $this->call->toUser->name,
+            ],
+            'created_at' => $this->call->created_at,
+            'updated_at' => $this->call->updated_at,
+        ];
+    }
 }

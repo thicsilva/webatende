@@ -21,6 +21,15 @@
     </ul>
   </div>
 @endif
+@if (Session::has('alert'))
+  <div class="alert {{session('alert.type')==='success'?'alert-success':'alert-danger'}} alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      <span class="sr-only">Close</span>
+    </button>
+    {{ session('alert.message')}}
+  </div>
+@endif
   <div class="row">
     <div class="col-md-12 d-flex align-items-stretch grid-margin">
       <div class="row flex-grow">
@@ -103,14 +112,14 @@
     'use strict';
 
     $(function(){
-      $('#restriction').hide();
+
+      let docNumber = document.getElementById('doc_number');
+      let phone = document.getElementById('phone');
+      Inputmask({"mask": ['999.999.999-99', '99.999.999/9999-99'], "keepstatic":true}).mask(docNumber);
+      Inputmask({"mask": ['(99)9999-9999', '(99)99999-9999'], "keepstatic":true}).mask(phone);
 
       $('#has_restriction').on('click', function(){
-        if (this.checked){
-          $('#restriction').show();
-        } else {
-          $('#restriction').hide();
-        }
+        $('#restriction').toggle(this.checked);
       });
 
     })
