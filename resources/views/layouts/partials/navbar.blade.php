@@ -55,9 +55,12 @@
           <a class="dropdown-item">
             Check Inbox
           </a>
-          <a class="dropdown-item">
+          <a class="dropdown-item" onclick="event.preventDefault();document.getElementById('form-logout').submit();">
             Sign Out
           </a>
+          <form action="{{ route('logout') }}" method="post" id="form-logout" style="display:none">
+            @csrf
+          </form>
         </div>
       </li>
     </ul>

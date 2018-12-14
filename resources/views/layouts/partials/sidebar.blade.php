@@ -52,7 +52,7 @@
       <div class="collapse {{request()->is('call*')?'show':''}}" id="ui-call">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item">
-            <a class="nav-link {{request()->is('call')?'active':''}}" href="{{ route('call.index') }}">Todos</a>
+            <a class="nav-link {{request()->is('call')?'active':''}}" href="{{ route('call.index') }}">Todas</a>
           </li>
           <li class="nav-item">
             <a class="nav-link {{request()->is('call/for-you')?'active':''}}" href="{{ route('call.foryou') }}">Para Você</a>
@@ -60,6 +60,14 @@
         </ul>
       </div>
     </li>
+    @if (auth()->user()->is_admin)
+    <li class="nav-item {{request()->is('user')?'active':''}}">
+      <a class="nav-link" href="{{ route('user.index') }}">
+        <i class="menu-icon mdi mdi-account-multiple"></i>
+          Usuários
+      </a>
+    </li>
+    @endif
   </ul>
 </nav>
 <!-- end sidebar -->

@@ -37,6 +37,12 @@ Route::middleware(['auth'])->group(function(){
         Route::post('comment/{call}', 'CommentController@store')->name('comment.store');
         Route::delete('comment/{comment}', 'CommentController@delete')->name('comment.delete');
     });
+    Route::group(['prefix' => 'user'], function(){
+        Route::get('/', 'UserController@index')->name('user.index');
+        Route::get('/profile', 'UserController@profile')->name('user.profile');
+        Route::put('/{user}', 'UserController@update')->name('user.update');
+        Route::delete('/{user}', 'UserController@delete')->name('user.delete');
+    });
 });
 
 Auth::routes();
