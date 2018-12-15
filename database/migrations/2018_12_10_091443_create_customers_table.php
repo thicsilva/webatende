@@ -23,7 +23,7 @@ class CreateCustomersTable extends Migration
             $table->string('email');
             $table->boolean('has_contract')->default(false);
             $table->boolean('has_restriction')->default(false);
-            $table->text('restriction_anotation')->nullable();
+            $table->text('restriction_annotation')->nullable();
             $table->timestamps();
         });
     }

@@ -164,7 +164,6 @@
     $(function(){
       $('#customer_id').select2({
         mimimumInputLenght: 2,
-        tags: [],
         ajax: {
           url: "{{ route('customer.search') }}",
           dataType: 'json',
@@ -176,10 +175,10 @@
           },
           processResults: function(data){
             return {
-              results: $.map(data, function (item){
+              results: $.map(data, function(item) {
                 return {
                   text: item.name,
-                  id: item.id
+                  id: item.id,
                 }
               })
             };
@@ -187,9 +186,6 @@
           cache: true,
         },
         placeholder: 'Digite Razão, Fantasia ou CNPJ',
-        escapeMarkup: function (markup) { return markup; },
-        minimumInputLength: 2,
-
       });
 
       $('#to_user_id').select2();

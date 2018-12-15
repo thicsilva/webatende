@@ -8203,13 +8203,13 @@ window._ = __webpack_require__(148);
  */
 
 try {
-  window.Popper = __webpack_require__(7).default;
-  window.$ = window.jQuery = __webpack_require__(4);
-  window.swal = __webpack_require__(149);
-  window.Inputmask = __webpack_require__(151);
-  window.select2 = __webpack_require__(156);
+    window.Popper = __webpack_require__(7).default;
+    window.$ = window.jQuery = __webpack_require__(4);
+    window.swal = __webpack_require__(149);
+    window.Inputmask = __webpack_require__(151);
+    window.select2 = __webpack_require__(156);
 
-  __webpack_require__(14);
+    __webpack_require__(14);
 } catch (e) {}
 
 /**
@@ -8231,9 +8231,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
@@ -8247,10 +8247,10 @@ if (token) {
 window.Pusher = __webpack_require__(177);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo__["a" /* default */]({
-  broadcaster: 'pusher',
-  key: "0d583553fc3213b01f69",
-  cluster: "us2",
-  encrypted: false
+    broadcaster: 'pusher',
+    key: Object({"NODE_ENV":"development"}).MIX_PUSHER_APP_KEY,
+    cluster: Object({"NODE_ENV":"development"}).MIX_PUSHER_APP_CLUSTER,
+    encrypted: false
 });
 
 /***/ }),
@@ -69299,7 +69299,9 @@ var render = function() {
           return call.to_user.id == _vm.current
             ? _c("tr", { key: call.id }, [
                 _c("td", [
-                  _vm._v("\n        " + _vm._s(call.customer.name) + "\n      ")
+                  _vm._v(
+                    "\r\n        " + _vm._s(call.customer.name) + "\r\n      "
+                  )
                 ]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(call.contact))]),
@@ -69307,11 +69309,11 @@ var render = function() {
                 call.status
                   ? _c("td", [
                       _c("span", { staticClass: "status-indicator online" }),
-                      _vm._v("\n        Encerrada\n      ")
+                      _vm._v("\r\n        Encerrada\r\n      ")
                     ])
                   : _c("td", [
                       _c("span", { staticClass: "status-indicator away" }),
-                      _vm._v("\n        Aberta\n      ")
+                      _vm._v("\r\n        Aberta\r\n      ")
                     ]),
                 _vm._v(" "),
                 _c("td", [_vm._v(" " + _vm._s(call.to_user.name))]),
@@ -69340,7 +69342,7 @@ var render = function() {
                         },
                         [
                           _c("i", { staticClass: "mdi mdi-delete" }),
-                          _vm._v("\n              Excluir\n          ")
+                          _vm._v("\r\n              Excluir\r\n          ")
                         ]
                       )
                     ]
@@ -69384,7 +69386,7 @@ var staticRenderFns = [
         { staticClass: "btn btn-inverse-primary", attrs: { href: "#" } },
         [
           _c("i", { staticClass: "mdi mdi-pencil" }),
-          _vm._v("\n            Editar\n          ")
+          _vm._v("\r\n            Editar\r\n          ")
         ]
       )
     ])

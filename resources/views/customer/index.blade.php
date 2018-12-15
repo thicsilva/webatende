@@ -44,7 +44,7 @@
             </div>
           </form>
           <div class="table-responsive">
-            <table class="table table-striped table-responsive" id="table">
+            <table class="table table-striped" id="table">
               <thead>
                 <tr>
                   <th>Razão Social</th>
@@ -60,7 +60,7 @@
                 <h4 class="class-title">Não há registros</h4>
               @endif
               @foreach($customers as $customer)
-                <tr class="{{ $customer->has_contract?'table-success':''}} {{$customer->has_restriction?'table-danger':'' }}">
+                <tr>
                   <td>{{ $customer->name }}</td>
                   <td>{{ $customer->fantasy_name }}</td>
                   <td>{{ $customer->doc_number }}</td>
