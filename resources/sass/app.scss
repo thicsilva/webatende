@@ -17,8 +17,9 @@
 
 // select2
 @import '~select2/src/scss/core';
+@import '~fullcalendar/dist/fullcalendar.min.css';
+@import '~daterangepicker/daterangepicker.css';
 /* === Template mixins === */
-
 @import "mixins/animation";
 @import "mixins/background";
 @import "mixins/blockqoute";
@@ -60,6 +61,7 @@
 @import "components/preview";
 @import "components/tables";
 @import "components/select2";
+@import "components/fullcalendar";
 /*-------------------------------------------------------------------*/
 
 /* === Landing screens === */

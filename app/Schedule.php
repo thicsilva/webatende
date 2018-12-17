@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Schedule extends Model
 {
     protected $fillable = [
-        'user_id', 'call_id', 'comment',
+        'customer_id', 'from_user_id', 'to_user_id', 'description', 'initial_date', 'final_date'
     ];
 
     protected $dates = [
-        'created_at', 'updated_at',
+        'created_at', 'updated_at', 'initial_date', 'final_date'
     ];
 
     public function fromUser()

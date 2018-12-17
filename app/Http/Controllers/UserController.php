@@ -97,7 +97,7 @@ class UserController extends Controller
             'password' => 'required|min:6|confirmed',
         ]);
         $user->fill([
-            'password' => $request->password,
+            'password' => bcrypt($request->password),
         ])->save();
         session()->flash('alert', ['type' => 'success', 'message' => 'Senha alterada']);
         return redirect()->back();

@@ -29,7 +29,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
  */
 Vue.component('notification', require('./components/NotificationComponent.vue'));
 Vue.component('event', require('./components/EventComponent.vue'));
-Vue.component('call-table', require('./components/TableComponent.vue'));
+//Vue.component('call-table', require('./components/TableComponent.vue'));
 const app = new Vue({
     el: '#app'
 });

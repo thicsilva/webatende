@@ -85,7 +85,7 @@
           })
       },
       formatDate(date){
-        return moment(date).format('DD/MM/YYYY');
+        return moment(date, 'YYYY-MM-DD hh:mm:ss').format('DD/MM/YYYY');
       }
     }
   }

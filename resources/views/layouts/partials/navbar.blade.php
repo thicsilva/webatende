@@ -12,7 +12,7 @@
   <div class="navbar-menu-wrapper d-flex align-items-center">
     <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
       <li class="nav-item {{ Request::is('schedule*')?'active':''}}">
-        <a href="#" class="nav-link">
+        <a href="{{ route('schedule.index') }}" class="nav-link">
           <i class="mdi mdi-calendar-clock"></i>Agendamentos
         </a>
       </li>

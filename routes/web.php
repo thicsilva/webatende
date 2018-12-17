@@ -47,8 +47,17 @@ Route::middleware(['auth'])->group(function(){
         Route::put('/{user}', 'UserController@update')->name('user.update');
         Route::delete('/{user}', 'UserController@delete')->name('user.delete');
     });
+    Route::group(['prefix' => 'schedule'], function(){
+        Route::get('/', 'ScheduleController@index')->name('schedule.index');
+        Route::get('create', 'ScheduleController@create')->name('schedule.create');
+        Route::post('/', 'ScheduleController@store')->name('schedule.store');
+        Route::get('/json', 'ScheduleController@fetchAll')->name('schedule.json');
+    });
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/test', function(){
+    return bcrypt('123456');
+});
