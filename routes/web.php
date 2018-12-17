@@ -39,7 +39,11 @@ Route::middleware(['auth'])->group(function(){
     });
     Route::group(['prefix' => 'user'], function(){
         Route::get('/', 'UserController@index')->name('user.index');
+        Route::get('/edit/{user}', 'UserController@edit')->name('user.edit');
         Route::get('/profile', 'UserController@profile')->name('user.profile');
+        Route::put('/profile', 'UserController@updateProfile')->name('user.update.profile');
+        Route::get('/password', 'UserController@password')->name('user.password');
+        Route::put('/password', 'UserController@updatePassword')->name('user.update.password');
         Route::put('/{user}', 'UserController@update')->name('user.update');
         Route::delete('/{user}', 'UserController@delete')->name('user.delete');
     });

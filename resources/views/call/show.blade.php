@@ -76,7 +76,7 @@
             <div class="row ticket-card mt-3 pb-2 border-bottom pb-3 mb-3">
 
               <div class="col-md-1">
-                <img src="{{ asset('images/upload/' . $comment->user->avatar )}}" alt="profile image" class="img-sm rounded-circle mb-4 mb-md-0">
+                <img src="{{ asset('storage/' . $comment->user->avatar )}}" alt="profile image" class="img-sm rounded-circle mb-4 mb-md-0">
               </div>
               <div class="ticket-details col-md-9">
                 <div class="d-flex">

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Editar Perfil')
+@section('title', 'Editar Usuário')
 
 @section('content')
 
@@ -32,8 +32,8 @@
     <div class="col-md-12 stretch-card grid-margin">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Edição de Perfil</h4>
-          <form action="{{ route('user.update.profile')}}" method="post" class="forms-sample" enctype="multipart/form-data">
+          <h4 class="card-title">Edição de usuário</h4>
+          <form action="{{ route('user.update', $user->id)}}" method="post" class="forms-sample">
             @csrf
             @method('PUT')
             <div class="row">
@@ -46,13 +46,16 @@
                   <label for="email">Email</label>
                   <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $user->email) }}" disabled>
                 </div>
-                <div class="form-group">
-                  <label for="avatar">Imagem</label>
-                  <input type="file" name="avatar" id="avatar" accept="image/*" class="form-control">
-                </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
+                  <div class="form-check form-check-flat">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" name="is_admin" id="is_admin" value="1" {{ old('is_admin', $user->is_admin)?'checked':'' }}>
+                      Administrador
+                      <i class="input-helper"></i>
+                    </label>
+                  </div>
                   <div class="form-check form-check-flat">
                     <label class="form-check-label">
                       <input type="checkbox" class="form-check-input" name="show_notification" id="show_notification" value="1" {{ old('show_notification', $user->show_notification)?'checked':'' }}>

@@ -34,13 +34,13 @@
               @foreach($users as $user)
                 <tr>
                   <td class="py-1">
-                    <img src="{{ asset('images/upload/' . $user->avatar)}}" alt="user profile">
+                    <img src="{{ asset('storage/' . $user->avatar)}}" alt="user profile">
                   </td>
                   <td>{{ $user->name }}</td>
                   <td>{{ $user->email }}</td>
                   <td>
                     <div class="btn-group" role="group">
-                      <a href="#" class="btn btn-icons btn-inverse-primary" title="Editar">
+                      <a href="{{ route('user.edit', $user->id) }}" class="btn btn-icons btn-inverse-primary" title="Editar">
                         <i class="mdi mdi-pencil"></i>
                       </a>
                     </div>

@@ -28,4 +28,10 @@ class Customer extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function delete()
+    {
+        $this->calls()->delete();
+        parent::delete();
+    }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Cadastrar Cliente')
+@section('title', 'Cadastrar Chamada')
 
 @section('content')
   <!-- content-wrapper -->
