@@ -51,6 +51,10 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/', 'ScheduleController@index')->name('schedule.index');
         Route::get('create', 'ScheduleController@create')->name('schedule.create');
         Route::post('/', 'ScheduleController@store')->name('schedule.store');
+        Route::get('/edit/{schedule}', 'ScheduleController@edit')->name('schedule.edit');
+        Route::put('/{schedule}', 'ScheduleController@update')->name('schedule.update');
+        Route::delete('/{schedule}', 'ScheduleController@delete')->name('schedule.delete');
+        Route::get('show/{schedule}', 'ScheduleController@show')->name('schedule.show');
         Route::get('/json', 'ScheduleController@fetchAll')->name('schedule.json');
     });
 });

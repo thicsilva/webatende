@@ -5,6 +5,15 @@
 @section('content')
 <!-- content-wrapper -->
 <div class="content-wrapper">
+@if (Session::has('alert'))
+  <div class="alert {{session('alert.type')==='success'?'alert-success':'alert-danger'}} alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      <span class="sr-only">Close</span>
+    </button>
+    {{ session('alert.message')}}
+  </div>
+@endif
   <div class="row">
     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
       <div class="card card-statistics">
@@ -425,145 +434,88 @@
       </div>
     </div>
   </div>
+  @if($calls->count()>0)
   <div class="row">
     <div class="col-12 grid-margin">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title mb-4">Manage Tickets</h5>
+          <h5 class="card-title mb-4">Gerenciar Chamadas</h5>
           <div class="fluid-container">
+          @foreach($calls as $call)
             <div class="row ticket-card mt-3 pb-2 border-bottom pb-3 mb-3">
               <div class="col-md-1">
-                <img class="img-sm rounded-circle mb-4 mb-md-0" src="images/faces/face1.jpg" alt="profile image">
+                <img class="img-sm rounded-circle mb-4 mb-md-0" src="{{ asset('storage/' . $call->fromUser->avatar) }}" alt="profile image">
               </div>
               <div class="ticket-details col-md-9">
                 <div class="d-flex">
-                  <p class="text-dark font-weight-semibold mr-2 mb-0 no-wrap">James :</p>
-                  <p class="text-primary mr-1 mb-0">[#23047]</p>
-                  <p class="mb-0 ellipsis">Donec rutrum congue leo eget malesuada.</p>
+                  <p class="text-dark font-weight-semibold mr-2 mb-0 no-wrap">{{ $call->fromUser->name }}</p>
+                  <p class="text-primary mr-1 mb-0"><a href="{{route('call.show', $call->id) }}">#{{ $call->id }}</a></p>
+                  <p class="mb-0 ellipsis">{{ $call->customer->name }}</p>
                 </div>
-                <p class="text-gray ellipsis mb-2">Donec rutrum congue leo eget malesuada. Quisque velit nisi, pretium ut lacinia in, elementum id enim
-                  vivamus.
+                <p class="text-gray ellipsis mb-2">{{ $call->subject }}
                 </p>
                 <div class="row text-gray d-md-flex d-none">
                   <div class="col-4 d-flex">
-                    <small class="mb-0 mr-2 text-muted text-muted">Last responded :</small>
-                    <small class="Last-responded mr-2 mb-0 text-muted text-muted">3 hours ago</small>
+                    <small class="mb-0 mr-2 text-muted text-muted">Criado :</small>
+                    <small class="Last-responded mr-2 mb-0 text-muted text-muted">{{ $call->created_at->diffForHumans() }}</small>
                   </div>
+                  @if($call->comments->count()>0)
                   <div class="col-4 d-flex">
-                    <small class="mb-0 mr-2 text-muted text-muted">Due in :</small>
-                    <small class="Last-responded mr-2 mb-0 text-muted text-muted">2 Days</small>
+                    <small class="mb-0 mr-2 text-muted text-muted">Último comentário :</small>
+                    <small class="Last-responded mr-2 mb-0 text-muted text-muted">{{$call->comments->last()->created_at->diffForHumans() }}</small>
                   </div>
+                  @endif
                 </div>
               </div>
               <div class="ticket-actions col-md-2">
                 <div class="btn-group dropdown">
                   <button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Manage
+                    Gerenciar
                   </button>
                   <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">
-                      <i class="fa fa-reply fa-fw"></i>Quick reply</a>
-                    <a class="dropdown-item" href="#">
-                      <i class="fa fa-history fa-fw"></i>Another action</a>
+                    <a class="dropdown-item fast-comment" href="#" data-callid="{{ $call->id }}">
+                      <i class="fa fa-reply fa-fw"></i>Comentar</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">
-                      <i class="fa fa-check text-success fa-fw"></i>Resolve Issue</a>
-                    <a class="dropdown-item" href="#">
-                      <i class="fa fa-times text-danger fa-fw"></i>Close Issue</a>
+                    <a class="dropdown-item fast-close" href="#" data-callid="{{ $call->id }}">
+                      <i class="fa fa-times text-danger fa-fw"></i>Encerrar</a>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="row ticket-card mt-3 pb-2 border-bottom pb-3 mb-3">
-              <div class="col-md-1">
-                <img class="img-sm rounded-circle mb-4 mb-md-0" src="images/faces/face2.jpg" alt="profile image">
-              </div>
-              <div class="ticket-details col-md-9">
-                <div class="d-flex">
-                  <p class="text-dark font-weight-semibold mr-2 mb-0 no-wrap">Stella :</p>
-                  <p class="text-primary mr-1 mb-0">[#23135]</p>
-                  <p class="mb-0 ellipsis">Curabitur aliquet quam id dui posuere blandit.</p>
-                </div>
-                <p class="text-gray ellipsis mb-2">Pellentesque in ipsum id orci porta dapibus. Sed porttitor lectus nibh. Curabitur non nulla sit amet
-                  nisl.
-                </p>
-                <div class="row text-gray d-md-flex d-none">
-                  <div class="col-4 d-flex">
-                    <small class="mb-0 mr-2 text-muted">Last responded :</small>
-                    <small class="Last-responded mr-2 mb-0 text-muted">3 hours ago</small>
-                  </div>
-                  <div class="col-4 d-flex">
-                    <small class="mb-0 mr-2 text-muted">Due in :</small>
-                    <small class="Last-responded mr-2 mb-0 text-muted">2 Days</small>
-                  </div>
-                </div>
-              </div>
-              <div class="ticket-actions col-md-2">
-                <div class="btn-group dropdown">
-                  <button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Manage
-                  </button>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">
-                      <i class="fa fa-reply fa-fw"></i>Quick reply</a>
-                    <a class="dropdown-item" href="#">
-                      <i class="fa fa-history fa-fw"></i>Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">
-                      <i class="fa fa-check text-success fa-fw"></i>Resolve Issue</a>
-                    <a class="dropdown-item" href="#">
-                      <i class="fa fa-times text-danger fa-fw"></i>Close Issue</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row ticket-card mt-3">
-              <div class="col-md-1">
-                <img class="img-sm rounded-circle mb-4 mb-md-0" src="images/faces/face3.jpg" alt="profile image">
-              </div>
-              <div class="ticket-details col-md-9">
-                <div class="d-flex">
-                  <p class="text-dark font-weight-semibold mr-2 mb-0 no-wrap">John Doe :</p>
-                  <p class="text-primary mr-1 mb-0">[#23246]</p>
-                  <p class="mb-0 ellipsis">Mauris blandit aliquet elit, eget tincidunt nibh pulvinar.</p>
-                </div>
-                <p class="text-gray ellipsis mb-2">Nulla quis lorem ut libero malesuada feugiat. Proin eget tortor risus. Lorem ipsum dolor sit amet.</p>
-                <div class="row text-gray d-md-flex d-none">
-                  <div class="col-4 d-flex">
-                    <small class="mb-0 mr-2 text-muted">Last responded :</small>
-                    <small class="Last-responded mr-2 mb-0 text-muted">3 hours ago</small>
-                  </div>
-                  <div class="col-4 d-flex">
-                    <small class="mb-0 mr-2 text-muted">Due in :</small>
-                    <small class="Last-responded mr-2 mb-0 text-muted">2 Days</small>
-                  </div>
-                </div>
-              </div>
-              <div class="ticket-actions col-md-2">
-                <div class="btn-group dropdown">
-                  <button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Manage
-                  </button>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">
-                      <i class="fa fa-reply fa-fw"></i>Quick reply</a>
-                    <a class="dropdown-item" href="#">
-                      <i class="fa fa-history fa-fw"></i>Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">
-                      <i class="fa fa-check text-success fa-fw"></i>Resolve Issue</a>
-                    <a class="dropdown-item" href="#">
-                      <i class="fa fa-times text-danger fa-fw"></i>Close Issue</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+          @endforeach
           </div>
         </div>
       </div>
     </div>
   </div>
+  @endif
 </div>
 <!-- content-wrapper ends -->
 
+@stop
+
+@section('js')
+  <script>
+    (function($){
+      'use strict';
+      $(function(){
+        $('.fast-close').each(function(){
+          $(this).on('click', function(e){
+            var callid = $(this)[0].dataset.callid;
+            $.ajax({
+              url: "{{ url('/call/close') }}/" + callid,
+              type: 'POST',
+              data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                id: $(this)[0].dataset.callid,
+              },
+              success: function(data){
+                location.reload();
+              }
+            });
+          });
+        })
+      })
+    })(jQuery);
+  </script>
 @stop

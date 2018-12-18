@@ -36,17 +36,19 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">Agendamento</h4>
-          <form action="{{ route('schedule.store')}}" method="post" class="forms-sample">
+          <form action="{{ route('schedule.update', $schedule->id)}}" method="post" class="forms-sample">
             @csrf
+            @method('PUT')
             <div class="row">
               <div class="form-group col-md-6 {{ $errors->has('description') ? 'has-danger' : '' }}">
                 <label for="name">Descrição</label>
-                <input type="text" name="description" id="description" class="form-control" value="{{ old('description') }}" required>
+                <input type="text" name="description" id="description" class="form-control" value="{{ old('description', $schedule->description) }}" required>
               </div>
               <div class="form-group col-md-6 {{ $errors->has('customer_id') ? 'has-danger' : '' }}">
                 <label for="name">Cliente</label>
                 <div class="input-group">
                   <select name="customer_id" id="customer_id" class="form-control">
+                    <option value="{{ $schedule->customer_id }}">{{$schedule->customer->name}}</option>
                   </select>
                   <div class="input-group-append text-white">
                     <button class="btn btn-icons btn-inverse-success" type="button" data-toggle="modal" data-target="#create-customer">
@@ -57,14 +59,14 @@
               </div>
               <div class="form-group col-md-6 {{ $errors->has('dates') ? 'has-danger' : '' }}">
                 <label for="dates">Data</label>
-                <input type="text" name="dates" id="dates" class="form-control" value="{{ old('dates') }}" required>
+                <input type="text" name="dates" id="dates" class="form-control" value="{{ old('dates', $schedule->initial_date->format('d/m/Y H:i:s') . ' - ' . $schedule->final_date->format('d/m/Y H:i:s')) }}" required>
               </div>
               <div class="form-group col-md-6{{ $errors->has('to_user_id') ? 'has-danger' : '' }}">
                 <label for="to_user_id">Para usuário (opcional)</label>
                 <select name="to_user_id" id="to_user_id" class="form-control">
                   <option value="">Selecione</option>
                 @foreach ($users as $user)
-                  <option value="{{ $user->id }}">{{ $user->name}} </option>
+                  <option value="{{ $user->id }}" {{old('to_user_id', $schedule->to_user_id)==$user->id?'selected':''}}>{{ $user->name}} </option>
                 @endforeach
                 </select>
               </div>

@@ -40,7 +40,7 @@
                   <div class="form-group col-md-6 {{ $errors->has('customer_id') ? 'has-danger' : '' }}">
                     <label for="name">Cliente</label>
                     <div class="input-group">
-                      <select name="customer_id" id="customer_id" class="form-control">
+                      <select name="customer_id" id="customer_id" class="form-control" style="height:100%">
                       </select>
                       <div class="input-group-append text-white">
                         <button class="btn btn-icons btn-inverse-success" type="button" data-toggle="modal" data-target="#create-customer">
@@ -163,7 +163,8 @@
 
     $(function(){
       $('#customer_id').select2({
-        mimimumInputLenght: 2,
+        minimumInputLength: 3,
+        allowClear: true,
         ajax: {
           url: "{{ route('customer.search') }}",
           dataType: 'json',
@@ -178,6 +179,8 @@
               results: $.map(data, function(item) {
                 return {
                   text: item.name,
+                  city: item.city,
+                  docNumber: item.doc_number,
                   id: item.id,
                 }
               })
@@ -186,9 +189,39 @@
           cache: true,
         },
         placeholder: 'Digite Razão, Fantasia ou CNPJ',
+        escapeMarkup: function (markup) { return markup; },
+        templateResult: formatRepo,
+        templateSelection: formatRepoSelection,
+        language: 'pt'
       });
 
       $('#to_user_id').select2();
+
+      function formatRepo (repo) {
+        if (repo.loading) {
+          return repo.text;
+        }
+
+        var markup = "<div class='select2-result-repository clearfix'>" +
+          "<div class='select2-result-repository__meta'>" +
+            "<div class='select2-result-repository__title'>" + repo.text + "</div>";
+
+        if (repo.city) {
+          markup += "<div class='select2-result-repository__description text-gray'>" + repo.city + "</div>";
+        }
+
+        markup += "<div class='select2-result-repository__statistics'>" +
+          "<div class='select2-result-repository__forks text-gray'><small>" + repo.docNumber + "</small></div>" +
+        "</div>" +
+        "</div>"+
+        "</div>";
+
+        return markup;
+      }
+
+      function formatRepoSelection (repo) {
+        return repo.text;
+      }
 
     })
   })(jQuery);

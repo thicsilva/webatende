@@ -17,15 +17,39 @@ class CallController extends Controller
         view()->share('users', $users);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $calls = Call::with('customer')->paginate(10);
+        $customer = $request->get('customer');
+        $toUser = $request->get('to_user');
+        $initialDate = $request->get('initial_date');
+        $finalDate = $request->get('final_date');
+
+        $calls = Call::select('calls.*')
+            ->join('customers', 'customers.id', '=', 'calls.customer_id')
+            ->join('users', 'users.id', '=', 'calls.to_user_id')
+            ->when($customer, function($q, $customer){
+                return $q->where('customers.name', 'like', "%$customer%");
+            })
+            ->when($toUser, function($q, $toUser){
+                return $q->where('users.name', 'like', "%$toUser%");
+            })
+            ->when($initialDate, function($q, $initialDate){
+                return $q->whereRaw("date(calls.created_at)>='$initialDate'");
+            })
+            ->when($finalDate, function($q, $finalDate){
+                return $q->whereRaw("date(calls.created_at)<='$finalDate'");
+            })
+            ->orderBy('calls.created_at', 'desc')
+            ->paginate(10);
         return view('call.index', compact('calls'));
     }
 
     public function forYou()
     {
-        $calls = Call::with('customer')->where('to_user_id', auth()->user()->id)->paginate(10);
+        $calls = Call::with('customer')
+            ->where('to_user_id', auth()->user()->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
         return view('call.index', compact('calls'));
     }
 
@@ -57,11 +81,14 @@ class CallController extends Controller
         return redirect()->back();
     }
 
-    public function close(Call $call)
+    public function close(Request $request, Call $call)
     {
         $call = Call::findOrFail($call->id);
         $call->status=true;
         $call->save();
+        if ($request->ajax()){
+            return response(200);
+        }
         session()->flash('alert', ['type' => 'success', 'message' => 'Chamada encerrada!']);
         return redirect()->back();
     }

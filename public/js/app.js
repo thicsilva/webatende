@@ -51142,12 +51142,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -52198,20 +52192,6 @@ var staticRenderFns = [
           attrs: { "aria-labelledby": "notificationDropdown" }
         },
         [
-          _c("a", { staticClass: "dropdown-item" }, [
-            _c("p", { staticClass: "mb-0 font-weight-normal float-left" }, [
-              _vm._v("You have 4 new notifications\n      ")
-            ]),
-            _vm._v(" "),
-            _c(
-              "span",
-              { staticClass: "badge badge-pill badge-warning float-right" },
-              [_vm._v("View all")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "dropdown-divider" }),
-          _vm._v(" "),
           _c("a", { staticClass: "dropdown-item preview-item" }, [
             _c("div", { staticClass: "preview-thumbnail" }, [
               _c("div", { staticClass: "preview-icon bg-success" }, [

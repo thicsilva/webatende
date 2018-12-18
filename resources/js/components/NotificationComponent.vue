@@ -5,12 +5,6 @@
       <span class="count">4</span>
     </a>
     <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-      <a class="dropdown-item">
-        <p class="mb-0 font-weight-normal float-left">You have 4 new notifications
-        </p>
-        <span class="badge badge-pill badge-warning float-right">View all</span>
-      </a>
-      <div class="dropdown-divider"></div>
       <a class="dropdown-item preview-item">
         <div class="preview-thumbnail">
           <div class="preview-icon bg-success">

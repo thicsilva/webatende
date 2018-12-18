@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Call;
 
 class HomeController extends Controller
 {
@@ -28,6 +29,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $calls = Call::where('to_user_id', auth()->user()->id)
+            ->where('status', false)
+            ->orderBy('created_at', 'desc')
+            ->limit(6)
+            ->get();
+        return view('home', compact('calls'));
     }
 }
