@@ -23,8 +23,13 @@
       </li>
     </ul>
     <ul class="navbar-nav navbar-nav-right">
+      @if(auth()->user()->show_notification)
       <event></event>
-      <notification user_id="{{auth()->user()->id}}" base_url="{{ asset('') }}"></notification>
+      <notification user_id="{{auth()->user()->id}}" base_url="{{ asset('') }}" sound_notification="{{ auth()->user()->play_sound }}"></notification>
+      @endif
+      <audio id="sound-notification">
+        <source src="{{asset('/storage/notify.mp3')}}" type="audio/mpeg">
+      </audio>
       <li class="nav-item dropdown d-none d-xl-inline-block">
         <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
           <span class="profile-text">Olá, {{ Auth::user()->name }} !</span>
