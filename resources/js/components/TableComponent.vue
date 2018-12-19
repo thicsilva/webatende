@@ -3,7 +3,6 @@
   <thead>
     <tr>
       <th>Cliente</th>
-      <th>Contato</th>
       <th>Status</th>
       <th>Para</th>
       <th>Data</th>
@@ -11,11 +10,10 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-for="call in calls" :key="call.id" v-if="call.to_user.id == current">
+    <tr v-for="call in calls" :key="call.id">
       <td>
         {{ call.customer.name }}
       </td>
-      <td>{{ call.contact }}</td>
       <td v-if="call.status">
         <span class="status-indicator online"></span>
         Encerrada
@@ -52,12 +50,14 @@
     props: ['current'],
     data() {
       return {
-        calls: []
+        calls: [],
+        search: '',
       }
     },
     mounted() {
       this.fetchCalls();
       this.listenChanges();
+      console.log('tabela montada');
     },
     methods: {
       fetchCalls() {
@@ -70,7 +70,7 @@
         .listen('CallCreated', (e) => {
           var call = this.calls.find((call) => call.id === e.id);
           if (!call) {
-            this.fetchCalls();
+            calls.unshift(call);
           }
         })
       },
@@ -85,7 +85,7 @@
           })
       },
       formatDate(date){
-        return moment(date, 'YYYY-MM-DD hh:mm:ss').format('DD/MM/YYYY');
+        return moment(date).format('DD/MM/YYYY');
       }
     }
   }

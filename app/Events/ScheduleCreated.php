@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class CallCreated implements ShouldBroadcast
+class ScheduleCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,11 +20,11 @@ class CallCreated implements ShouldBroadcast
      * @return void
      */
 
-    public $call;
+    public $schedule;
 
-    public function __construct($call)
+    public function __construct($schedule)
     {
-        $this->call = $call;
+        $this->schedule = $schedule;
     }
 
     /**
@@ -40,23 +40,22 @@ class CallCreated implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
-            'id' => $this->call->id,
+            'id' => $this->schedule->id,
             'customer' => [
-                'name' =>$this->call->customer->name,
+                'name' => $this->schedule->customer->name
             ],
-            'contact' => $this->call->contact,
-            'status' => $this->call->status,
+            'description' => $this->schedule->description,
             'fromUser' => [
-                'id' => $this->call->from_user_id,
-                'name' => $this->call->fromUser->name,
-                'avatar' => $this->call->fromUser->avatar,
+                'name' => $this->schedule->fromUser->name,
+                'avatar' => $this->schedule->fromUser->avatar,
             ],
             'toUser' => [
-                'id' => $this->call->to_user_id,
-                'name' => $this->call->toUser->name,
+                'id' => $this->schedule->to_user_id,
+                'name' => optional($this->schedule->toUser)->name,
+                'avatar' => optional($this->schedule->toUser)->avatar,
             ],
-            'created_at' => $this->call->created_at->format('Y-m-d H:i:s'),
-            'updated_at' => $this->call->updated_at->format('Y-m-d H:i:s'),
+            'initial' => $this->schedule->initial_date->format('d/m/Y \à\s H:i'),
+            'final' => $this->schedule->final_date->format('d/m/Y \à\s H:i')
         ];
     }
 }

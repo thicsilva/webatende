@@ -6,6 +6,7 @@ use App\Schedule;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Events\ScheduleCreated;
 
 class ScheduleController extends Controller
 {
@@ -46,7 +47,8 @@ class ScheduleController extends Controller
         $data['description'] = $request->get('description');
         $data['initial_date'] = $this->convertDate($dates[0]);
         $data['final_date'] = $this->convertDate($dates[1]);
-        Schedule::create($data);
+        $schedule = Schedule::create($data);
+        event(new ScheduleCreated($schedule));
         session()->flash('alert', ['type' => 'success', 'message' => 'Sucesso ao adicionar agendamento']);
         return redirect()->route('schedule.index');
     }

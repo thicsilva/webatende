@@ -58,6 +58,12 @@
                 <tr>
                   <td>
                     <a href="{{ route('call.show', $call->id) }}">{{ $call->customer->name }}</a>
+                  @if($call->customer->has_contract)
+                    <label class="badge badge-success">Contrato</label>
+                  @endif
+                  @if($call->customer->has_restriction)
+                    <label class="badge badge-danger">Restrição</label>
+                  @endif
                   </td>
                   <td>
                     <span class="status-indicator {{$call->status?'online':'away'}}"></span>
@@ -70,13 +76,13 @@
                       @if (($call->to_user_id == auth()->user()->id or auth()->user()->is_admin) and (!$call->status))
                       <form action="{{ route('call.close', $call->id) }}" method="post">
                         @csrf
-                        <button class="btn btn-inverse-primary" type="submit">
+                        <button class="btn btn-inverse-dark" type="submit">
                           <i class="mdi mdi-close-outline"></i>
                           Encerrar
                         </button>
                       </form>
                       @else
-                      <a href="{{ route('call.show', $call->id) }}" class="btn btn-inverse-success">
+                      <a href="{{ route('call.show', $call->id) }}" class="btn btn-inverse-primary">
                         <i class="mdi mdi-eye"></i>
                         Visualizar
                       </a>

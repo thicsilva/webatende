@@ -51,11 +51,11 @@
           <h4 class="card-title">
             Observações
           </h4>
-          <ul class="list-star">
-            <li class="font-weight-semibold {{ $call->has_contract?'text-success':'text-danger'}}">Cliente {{ $call->has_contract?'possui contrato':'não possui contrato'}}</li>
-            <li class="font-weight-semibold {{ $call->has_restriction?'text-danger':'text-success'}}">Cliente {{ $call->has_restriction?'possui restrições':'não possui restrições'}}</li>
-            @if($call->has_restriction)
-            <li>{{ $call->restriction_annotation }}</li>
+          <ul>
+            <li class="font-weight-semibold {{ $call->customer->has_contract?'text-success':'text-danger'}}">Cliente {{ $call->customer->has_contract?'possui contrato':'não possui contrato'}}</li>
+            <li class="font-weight-semibold {{ $call->customer->has_restriction?'text-danger':'text-success'}}">Cliente {{ $call->customer->has_restriction?'possui restrições':'não possui restrições'}}</li>
+            @if($call->customer->has_restriction)
+            <li class="font-weight-semibold">{{ $call->customer->restriction_annotation }}</li>
             @endif
           </ul>
           @if($call->status)
