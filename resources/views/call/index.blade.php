@@ -43,9 +43,10 @@
           </form>
           <div class="table-responsive">
             <!-- table component -->
-            <table class="table sortable-table table-striped" id="table">
+            <table class="table sortable-table table-striped table-sm" id="table">
               <thead>
                 <tr>
+                  <th>#ID</th>
                   <th>Cliente</th>
                   <th>Status</th>
                   <th>Para</th>
@@ -57,12 +58,15 @@
                 @foreach($calls as $call)
                 <tr>
                   <td>
-                    <a href="{{ route('call.show', $call->id) }}">{{ $call->customer->name }}</a>
+                    <a href="{{ route('call.show', $call->id) }}">#{{ $call->id }}</a>
+                  </td>
+                  <td>
+                    {{ $call->customer->name }}
                   @if($call->customer->has_contract)
-                    <label class="badge badge-success">Contrato</label>
+                    <span class="badge badge-success">Contrato</span>
                   @endif
                   @if($call->customer->has_restriction)
-                    <label class="badge badge-danger">Restrição</label>
+                    <span class="badge badge-danger">Restrição</span>
                   @endif
                   </td>
                   <td>

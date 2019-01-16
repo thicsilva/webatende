@@ -38,14 +38,16 @@ Route::middleware(['auth'])->group(function(){
         Route::delete('comment/{comment}', 'CommentController@delete')->name('comment.delete');
     });
     Route::group(['prefix' => 'user'], function(){
-        Route::get('/', 'UserController@index')->name('user.index');
-        Route::get('/edit/{user}', 'UserController@edit')->name('user.edit');
+        Route::group(['middleware' => 'admin'], function(){
+            Route::get('/', 'UserController@index')->name('user.index');
+            Route::get('/edit/{user}', 'UserController@edit')->name('user.edit');
+            Route::put('/{user}', 'UserController@update')->name('user.update');
+            Route::delete('/{user}', 'UserController@delete')->name('user.delete');
+        });
         Route::get('/profile', 'UserController@profile')->name('user.profile');
         Route::put('/profile', 'UserController@updateProfile')->name('user.update.profile');
         Route::get('/password', 'UserController@password')->name('user.password');
         Route::put('/password', 'UserController@updatePassword')->name('user.update.password');
-        Route::put('/{user}', 'UserController@update')->name('user.update');
-        Route::delete('/{user}', 'UserController@delete')->name('user.delete');
     });
     Route::group(['prefix' => 'schedule'], function(){
         Route::get('/', 'ScheduleController@index')->name('schedule.index');

@@ -24,7 +24,6 @@
     </ul>
     <ul class="navbar-nav navbar-nav-right">
       @if(auth()->user()->show_notification)
-      <event></event>
       <notification user_id="{{auth()->user()->id}}" base_url="{{ asset('') }}" sound_notification="{{ auth()->user()->play_sound }}"></notification>
       @endif
       <audio id="sound-notification">
@@ -36,11 +35,9 @@
           <img class="img-xs rounded-circle" src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="Profile image">
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-          @if(Auth::user()->is_admin)
           <a href="{{ route('user.profile') }}" class="dropdown-item mt-2">
             Editar Perfil
           </a>
-          @endif
           <a href="{{ route('user.password') }}" class="dropdown-item">
             Alterar Senha
           </a>

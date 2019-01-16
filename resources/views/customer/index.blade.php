@@ -44,7 +44,7 @@
             </div>
           </form>
           <div class="table-responsive">
-            <table class="table table-striped" id="table">
+            <table class="table table-striped table-sm" id="table">
               <thead>
                 <tr>
                   <th>Razão Social</th>
@@ -61,6 +61,7 @@
               @endif
               @foreach($customers as $customer)
                 <tr>
+
                   <td>{{ $customer->name }}</td>
                   <td>{{ $customer->fantasy_name }}</td>
                   <td>{{ $customer->doc_number }}</td>

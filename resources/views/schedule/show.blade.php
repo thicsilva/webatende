@@ -42,18 +42,20 @@
           </div>
 
           <div class="row">
-            <a href="{{ route('schedule.edit', $schedule->id) }}" class="btn btn-inverse-primary mr-2">
-              <i class="mdi mdi-pencil"></i>
-              Alterar
-            </a>
-            <form action="{{ route('schedule.delete', $schedule->id) }}" method="post">
-              @csrf
-              @method('DELETE')
-              <button class="btn btn-inverse-danger" type="submit">
-                <i class="mdi mdi-delete"></i>
-                Excluir
-              </button>
-            </form>
+            <div class="col text-center">
+              <form action="{{ route('schedule.delete', $schedule->id) }}" method="post">
+              <a href="{{ route('schedule.edit', $schedule->id) }}" class="btn btn-inverse-primary mr-2">
+                <i class="mdi mdi-pencil"></i>
+                Alterar
+              </a>
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-inverse-danger" type="submit">
+                  <i class="mdi mdi-delete"></i>
+                  Excluir
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

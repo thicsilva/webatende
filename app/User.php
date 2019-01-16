@@ -36,6 +36,11 @@ class User extends Authenticatable
         'created_at', 'updated_at',
     ];
 
+    public function isAdmin()
+    {
+        return $this->is_admin;
+    }
+
     public function callsFrom()
     {
         return $this->hasMany(Call::class, 'from_user_id');

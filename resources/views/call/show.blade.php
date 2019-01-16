@@ -41,6 +41,7 @@
             <p>{{ $call->customer->city }}</p>
             <p>{{ $call->customer->phone }}</p>
             <p>{{ $call->customer->email }}</p>
+            <p class="text-gray"><i>Última atualização: {{$call->customer->updated_at->diffForHumans()}} </i></p>
           </address>
         </div>
       </div>
@@ -96,7 +97,7 @@
 
               <div class="ticket-details col-md-2">
                 <div class="btn-group">
-                  @if (auth()->user()->id==$comment->user_id)
+                  @if (auth()->user()->id==$comment->user_id && !$call->status)
                   <form action="{{ route('comment.delete', $comment->id) }}" method="post">
                     @csrf
                     @method('delete')
@@ -113,6 +114,9 @@
             @endforeach
           </div>
           @if(!$call->status)
+          <form action="{{ route('call.close', $call->id) }}" method="post" id="close-call" class="forms-sample" style="display:none">
+          @csrf
+          </form>
           <form action="{{ route('comment.store', $call->id)}}" method="post" class="forms-sample">
             @csrf
             <div class="form-group">
@@ -124,6 +128,9 @@
                 <i class="mdi mdi-message-reply-text"></i>
                 Comentar
               </button>
+              @if($call->comments->count()>0)
+              <a href="#" class="mr-2 btn btn-inverse-dark" onclick="event.preventDefault(); document.getElementById('close-call').submit();"><i class="mdi mdi-close-outline"></i> Encerrar</a>
+              @endif
             </div>
           </form>
           @endif

@@ -46,7 +46,6 @@
           .listen('CallCreated', (call)=>{
             if (this.user_id == call.toUser.id){
               if (this.sound_notification==1){
-                console.log('tocando som');
                 s.play();
               }
               this.notifications.unshift({
