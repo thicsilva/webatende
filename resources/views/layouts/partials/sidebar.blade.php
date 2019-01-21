@@ -27,6 +27,32 @@
       </a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" href="#ui-register" aria-expanded="{{request()->is('accessories*', 'equipments*', 'situations*', 'equipment-types*', 'movements*')?'true':'false'}}" aria-controls="ui-customer">
+        <i class="menu-icon mdi mdi-plus-one"></i>
+        <span class="menu-title">Cadastros</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse {{request()->is('accessories*', 'equipments*', 'situations*', 'equipment-types*', 'movements*')?'show':''}}" id="ui-register">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a class="nav-link {{request()->is('accessories*')?'active':''}}" href="{{route('accessory.index')}}">Acessórios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{request()->is('equipments*')?'active':''}}" href="{{route('equipment.index')}}">Equipamentos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{request()->is('situations*')?'active':''}}" href="{{route('situation.index')}}">Situações</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{request()->is('equipment-types*')?'active':''}}" href="{{route('type.index')}}">Tipos de Equipamento</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{request()->is('movements*')?'active':''}}" href="{{route('movement.index')}}">Tipos Entrada/Saída</a>
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" href="#ui-customer" aria-expanded="{{request()->is('customer*')?'true':'false'}}" aria-controls="ui-customer">
         <i class="menu-icon mdi mdi-factory"></i>
         <span class="menu-title">Clientes</span>

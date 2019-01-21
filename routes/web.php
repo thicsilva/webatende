@@ -59,6 +59,37 @@ Route::middleware(['auth'])->group(function(){
         Route::get('show/{schedule}', 'ScheduleController@show')->name('schedule.show');
         Route::get('/json', 'ScheduleController@fetchAll')->name('schedule.json');
     });
+    Route::group(['prefix' => 'accessories'], function(){
+        Route::get('/', 'AccessoriesController@index')->name('accessory.index');
+        Route::post('/', 'AccessoriesController@store')->name('accessory.store');
+        Route::put('/{accessory}', 'AccessoriesController@update')->name('accessory.update');
+        Route::delete('/{accessory}', 'AccessoriesController@delete')->name('accessory.delete');
+    });
+    Route::group(['prefix' => 'equipments'], function(){
+        Route::get('/', 'EquipmentsController@index')->name('equipment.index');
+        Route::post('/', 'EquipmentsController@store')->name('equipment.store');
+        Route::put('/{equipment}', 'EquipmentsController@update')->name('equipment.update');
+        Route::delete('/{equipment}', 'EquipmentsController@delete')->name('equipment.delete');
+    });
+    Route::group(['prefix' => 'situations'], function(){
+        Route::get('/', 'SituationsController@index')->name('situation.index');
+        Route::post('/', 'SituationsController@store')->name('situation.store');
+        Route::put('/{situation}', 'SituationsController@update')->name('situation.update');
+        Route::delete('/{situation}', 'SituationsController@delete')->name('situation.delete');
+    });
+    Route::group(['prefix' => 'equipment-types'], function(){
+        Route::get('/', 'TypesController@index')->name('type.index');
+        Route::post('/', 'TypesController@store')->name('type.store');
+        Route::put('/{type}', 'TypesController@update')->name('type.update');
+        Route::delete('/{type}', 'TypesController@delete')->name('types.delete');
+    });
+    Route::group(['prefix' => 'movements'], function(){
+        Route::get('/', 'MovementsController@index')->name('movement.index');
+        Route::post('/', 'MovementsController@store')->name('movement.store');
+        Route::put('/{movement}', 'MovementsController@update')->name('movement.update');
+        Route::delete('/{movement}', 'MovementsController@delete')->name('movement.delete');
+    });
+
 });
 
 Auth::routes();

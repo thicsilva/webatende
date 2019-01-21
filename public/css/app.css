@@ -27752,6 +27752,37 @@ ul li {
   padding-top: 63px;
 }
 
+.add-button {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+
+.add-button button {
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+  border-radius: 30px;
+  background-color: #cb60b3;
+  border: none;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+  font-size: 24px;
+  color: white;
+  z-index: 9999;
+  transition: 0.2s ease-out;
+}
+
+.add-button button.main {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: #00ce68;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+}
+
 @media (min-width: 992px) {
   .sidebar-mini .navbar .navbar-brand-wrapper {
     width: 185px;
