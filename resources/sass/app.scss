@@ -65,6 +65,7 @@
 @import "components/tables";
 @import "components/select2";
 @import "components/fullcalendar";
+@import "components/wizards";
 /*-------------------------------------------------------------------*/
 
 /* === Landing screens === */
@@ -80,12 +81,26 @@
   }
 }
 
+
+.select2-container {
+  width: 100% !important;
+  padding: 0;
+}
+
+.input-group{
+  .select2-container {
+    width: 90% !important;
+  }
+
+}
+
 .add-button {
   position: fixed;
   bottom: 10px;
   right: 10px;
+  z-index: 9999;
 
-  button {
+  button, a {
     cursor: pointer;
     width: 48px;
     height: 48px;
@@ -95,7 +110,6 @@
     box-shadow: 0 1px 5px rgba(0,0,0,.4);
     font-size: 24px;
     color: white;
-    z-index: 9999;
 
     -webkit-transition: .2s ease-out;
     -moz-transition: .2s ease-out;
@@ -109,7 +123,6 @@
       background-color: #00ce68;
       right: 0;
       bottom: 0;
-      z-index: 20;
     }
   }
 

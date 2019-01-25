@@ -28,53 +28,108 @@
   </div>
 @endif
   <div class="row">
-    <div class="col-md-12 d-flex align-items-stretch grid-margin">
-      <div class="row flex-grow">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Cadastro de Chamada</h4>
-              <form action="{{ route('call.store')}}" method="post" class="forms-sample">
-                @csrf
-                <div class="row">
-                  <div class="form-group col-md-6 {{ $errors->has('customer_id') ? 'has-danger' : '' }}">
-                    <label for="name">Cliente</label>
-                    <div class="input-group">
-                      <select name="customer_id" id="customer_id" class="form-control">
-                      </select>
-                      <div class="input-group-append text-white">
-                        <button class="btn btn-icons btn-inverse-success" type="button" data-toggle="modal" data-target="#create-customer">
-                          <i class="mdi mdi-plus"></i>
-                        </button>
-                      </div>
+    <div class="col-12 grid-margin">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Entrada de Equipamento</h4>
+          <form id="so-create" action="{{ route('so.store')}}" method="post" class="forms-sample">
+            @csrf
+            <div>
+              <h3>Dados do Cliente</h3>
+              <section>
+                <h6>Dados do Cliente</h6>
+                <div class="form-group">
+                  <label for="customer_id">Cliente</label>
+                  <div class="input-group">
+                    <select name="customer_id" id="customer_id" class="form-control">
+                    </select>
+                    <div class="input-group-append text-white">
+                      <button class="btn btn-icons btn-inverse-success" type="button" data-toggle="modal" data-target="#create-customer">
+                        <i class="mdi mdi-plus"></i>
+                      </button>
                     </div>
                   </div>
-                  <div class="form-group col-md-6 {{ $errors->has('contact') ? 'has-danger' : '' }}">
-                    <label for="contact">Contato</label>
-                    <input type="text" name="contact" id="contact" class="form-control" value="{{ old('contact') }}">
+                </div>
+                <div class="form-group">
+                  <label for="contact">Contato</label>
+                  <input type="text" class="form-control" id="contact" name="contact">
+                </div>
+              </section>
+              <h3>Dados do Relógio</h3>
+              <section>
+                <h6>Dados do Relógio</h6>
+                <div class="form-group row">
+                  <label for="equipment_id" class="col-md-3">Equipamento</label>
+                  <div class="col-md-3">
+                    <select name="equipment_id" id="equipment_id" class="form-control select2">
+
+                    </select>
+                  </div>
+                  <label for="serial" class="col-md-3">Número Série</label>
+                  <div class="col-md-3">
+                    <input type="text" name="serial" id="serial" class="form-control">
                   </div>
                 </div>
-                <div class="row">
-                  <div class="form-group col-md-6 {{ $errors->has('subject') ? 'has-danger' : '' }}">
-                      <label for="subject">Assunto</label>
-                      <input type="text" name="subject" id="subject" class="form-control" value="{{ old('subject') }}">
+                <div class="form-group row">
+                  <label for="situation_id" class="col-md-3">Situação</label>
+                  <div class="col-md-3">
+                    <select name="situation_id" id="situation_id" class="form-control select2">
+                    @foreach($situations as $situation)
+                      <option value="{{$situation->id}}">{{$situation->description}}</option>
+                    @endforeach
+                    </select>
                   </div>
-                  <div class="form-group col-md-6 {{ $errors->has('to_user_id') ? 'has-danger' : '' }}">
-                      <label for="to_user_id">Chamado Para</label>
-                      <select name="to_user_id" id="to_user_id" class="form-control">
-                      @foreach ($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->name}} </option>
-                      @endforeach
-                      </select>
+                  <label for="accessories" class="col-md-3">Acessórios</label>
+                  <div class="col-md-3">
+                    <select name="accessories[]" id="accessories" class="form-control select2" multiple>
+                    @foreach($accessories as $accessory)
+                      <option value="{{$accessory->id}}">{{$accessory->description}}</option>
+                    @endforeach
+                    </select>
                   </div>
                 </div>
-                <div class="d-flex flex-row-reverse">
-                  <button class="btn btn-success" type="submit">Salvar</button>
-                  <a href="{{ route('customer.index') }}" class="btn btn-light mr-2">Cancelar</a>
+                <div class="form-group row">
+                  <label for="entrance_date"  class="col-md-3">Data Entrada</label>
+                  <div class="col-md-3">
+                    <input type="date" name="entrance_date" id="entrance_date" class="form-control">
+                  </div>
+                  <label for="entrance_movement_id" class="col-md-3">Tipo de Entrada</label>
+                  <div class="col-md-3">
+                    <select name="entrance_movement_id" id="entrance_movement_id" class="form-control select2">
+                    @foreach($movements as $movement)
+                      <option value="{{$movement->id}}">{{$movement->description}}</option>
+                    @endforeach
+                    </select>
+                  </div>
                 </div>
-              </form>
+                <div class="form-group row">
+                  <label for="fault" class="col-md-3">Defeito apresentado</label>
+                  <div class="col-md-9">
+                    <textarea name="fault" id="fault" class="form-control"></textarea>
+                  </div>
+                </div>
+              </section>
+              <h3>Dados Internos</h3>
+              <section>
+                <h6>Dados Internos</h6>
+                <div class="form-group">
+                  <label for="os_number">Número OS</label>
+                  <input type="text" name="os_number" id="os_number" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="documents">Documentos (NF, Pedido)</label>
+                  <textarea name="documents" id="documents" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="factory">Enviar para fábrica?</label>
+                  <select name="factory" id="factory" class="form-control select2">
+                    <option value="0">Não</option>
+                    <option value="1">Sim</option>
+                  </select>
+                </div>
+              </section>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -162,6 +217,52 @@
     'use strict';
 
     $(function(){
+      var options = [
+        @foreach($equipments as $equipment)
+        {
+          'id': {{$equipment->id}},
+          'text': "{{$equipment->model}}",
+          'serial': "{{$equipment->serial}}"
+        },
+        @endforeach
+      ]
+      var form = $("#so-create");
+      form.children("div").steps({
+        headerTag: "h3",
+        bodyTag: "section",
+        transitionEffect: "slideLeft",
+        stepsOrientation: "vertical",
+        onFinished: function (event, currentIndex) {
+          form.submit();
+        },
+        labels: {
+          cancel: "Cancelar",
+          current: "Etapa atual:",
+          pagination: "Paginação",
+          finish: "Finalizar",
+          next: "Próximo",
+          previous: "Anterior",
+          loading: "Carregando ..."
+      }
+      });
+
+      $('#equipment_id').select2({
+        placeholder: 'Selecione...',
+        data: options,
+      });
+      $('#equipment_id').on('select2:select', function(e){
+        var data = e.params.data;
+        $('#serial').val();
+        $('#serial').val(data.serial);
+      })
+      $('#entrance_movement_id').select2({
+        placeholder: 'Selecione...'
+      });
+      $('#accessories').select2({
+        tags: true,
+        tokenSeparators: [',']
+      });
+
       $('#customer_id').select2({
         minimumInputLength: 3,
         allowClear: true,

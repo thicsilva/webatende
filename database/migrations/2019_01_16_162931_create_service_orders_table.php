@@ -15,6 +15,7 @@ class CreateServiceOrdersTable extends Migration
     {
         Schema::create('service_orders', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('os_number', 10)->nullable();
             $table->integer('customer_id');
             $table->string('contact')->nullable();
             $table->integer('equipment_id');

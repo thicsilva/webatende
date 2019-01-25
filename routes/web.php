@@ -89,12 +89,23 @@ Route::middleware(['auth'])->group(function(){
         Route::put('/{movement}', 'MovementsController@update')->name('movement.update');
         Route::delete('/{movement}', 'MovementsController@delete')->name('movement.delete');
     });
+    Route::group(['prefix' => 'service-orders'], function(){
+        Route::get('/', 'ServiceOrdersController@index')->name('so.index');
+        Route::get('create', 'ServiceOrdersController@create')->name('so.create');
+        Route::post('/', 'ServiceOrdersController@store')->name('so.store');
+        Route::get('/edit/{so}', 'ServiceOrdersController@edit')->name('so.edit');
+        Route::put('/{so}', 'ServiceOrdersController@update')->name('so.update');
+        Route::delete('/{so}', 'ServiceOrdersController@delete')->name('so.delete');
+        Route::post('/status/{so}', 'ServiceOrdersController@status')->name('so.status');
+    });
 
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/chart', 'HomeController@chart')->name('home.chart');
+
 Route::get('/test', function(){
     return bcrypt('123456');
 });

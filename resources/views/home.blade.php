@@ -43,14 +43,14 @@
               <i class="mdi mdi-poll-box text-success icon-lg"></i>
             </div>
             <div class="float-right">
-              <p class="mb-0 text-right">Chamadas</p>
+              <p class="mb-0 text-right">Agendamentos</p>
               <div class="fluid-container">
-                <h3 class="font-weight-medium text-right mb-0">{{$callsWeek}}</h3>
+                <h3 class="font-weight-medium text-right mb-0">{{$schedules}}</h3>
               </div>
             </div>
           </div>
           <p class="text-muted mt-3 mb-0">
-            <i class="mdi mdi-calendar mr-1" aria-hidden="true"></i> Chamadas semanais
+            <i class="mdi mdi-calendar mr-1" aria-hidden="true"></i> Neste mês
           </p>
         </div>
       </div>
@@ -105,84 +105,32 @@
             <h3>{{ ucfirst(strftime('%A'))}}</h3>
             <p class="text-gray">
               <span class="weather-date">{{strftime('%d de %B, %Y') }}</span>
-              <span class="weather-location"> Bauru, SP</span>
+              <span class="weather-location"> - {{$weather->city->name}}</span>
             </p>
           </div>
           <div class="weather-data d-flex">
             <div class="mr-auto">
-              <h4 class="display-3">21
+              <h4 class="display-3">{{number_format($weather->list[0]->temp->day)}}
                 <span class="symbol">&deg;</span>C</h4>
               <p>
-                Mostly Cloudy
+                {{ ucfirst($weather->list[0]->weather[0]->description) }}
               </p>
             </div>
           </div>
         </div>
         <div class="card-body p-0">
           <div class="d-flex weakly-weather">
-            <div class="weakly-weather-item">
+          @for($i=1; $i<8; $i++)
+              <div class="weakly-weather-item">
               <p class="mb-0">
-                Sun
+                {{strftime('%a', strtotime(now()->addDay($i)))}}
               </p>
-              <i class="mdi mdi-weather-cloudy"></i>
+              <img src="http://openweathermap.org/img/w/{{$weather->list[$i]->weather[0]->icon}}.png" alt="$weather->list[$i]->weather[0]->description">
               <p class="mb-0">
-                30°
+              {{number_format($weather->list[$i]->temp->day)}}&deg;
               </p>
             </div>
-            <div class="weakly-weather-item">
-              <p class="mb-1">
-                Mon
-              </p>
-              <i class="mdi mdi-weather-hail"></i>
-              <p class="mb-0">
-                31°
-              </p>
-            </div>
-            <div class="weakly-weather-item">
-              <p class="mb-1">
-                Tue
-              </p>
-              <i class="mdi mdi-weather-partlycloudy"></i>
-              <p class="mb-0">
-                28°
-              </p>
-            </div>
-            <div class="weakly-weather-item">
-              <p class="mb-1">
-                Wed
-              </p>
-              <i class="mdi mdi-weather-pouring"></i>
-              <p class="mb-0">
-                30°
-              </p>
-            </div>
-            <div class="weakly-weather-item">
-              <p class="mb-1">
-                Thu
-              </p>
-              <i class="mdi mdi-weather-pouring"></i>
-              <p class="mb-0">
-                29°
-              </p>
-            </div>
-            <div class="weakly-weather-item">
-              <p class="mb-1">
-                Fri
-              </p>
-              <i class="mdi mdi-weather-snowy-rainy"></i>
-              <p class="mb-0">
-                31°
-              </p>
-            </div>
-            <div class="weakly-weather-item">
-              <p class="mb-1">
-                Sat
-              </p>
-              <i class="mdi mdi-weather-snowy"></i>
-              <p class="mb-0">
-                32°
-              </p>
-            </div>
+          @endfor
           </div>
         </div>
       </div>
@@ -191,42 +139,27 @@
     <div class="col-lg-5 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
-          <h2 class="card-title text-primary mb-5">Performance History</h2>
+          <h2 class="card-title text-primary mb-5">Histórico do Mês</h2>
           <div class="wrapper d-flex justify-content-between">
-            <div class="side-left">
-              <p class="mb-2">The best performance</p>
-              <p class="display-3 mb-4 font-weight-light">+45.2%</p>
-            </div>
-            <div class="side-right">
-              <small class="text-muted">2017</small>
-            </div>
-          </div>
-          <div class="wrapper d-flex justify-content-between">
-            <div class="side-left">
-              <p class="mb-2">Worst performance</p>
-              <p class="display-3 mb-5 font-weight-light">-35.3%</p>
-            </div>
-            <div class="side-right">
-              <small class="text-muted">2015</small>
-            </div>
+            <canvas id="chart"></canvas>
           </div>
           <div class="wrapper">
             <div class="d-flex justify-content-between">
-              <p class="mb-2">Sales</p>
-              <p class="mb-2 text-primary">88%</p>
+              <p class="mb-2">Seus Atendimentos</p>
+              <p class="mb-2 text-primary">{{ number_format(($callsForYou * 100) / $callsMonth)}}%</p>
             </div>
             <div class="progress">
-              <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" role="progressbar" style="width: 88%" aria-valuenow="88"
+              <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ number_format(($callsForYou * 100) / $callsMonth)}}%" aria-valuenow="{{ number_format(($callsForYou * 100) / $callsMonth)}}"
                 aria-valuemin="0" aria-valuemax="100"></div>
             </div>
           </div>
           <div class="wrapper mt-4">
             <div class="d-flex justify-content-between">
-              <p class="mb-2">Visits</p>
-              <p class="mb-2 text-success">56%</p>
+              <p class="mb-2">Seus Agendamentos</p>
+              <p class="mb-2 text-success">{{ number_format(($schedulesForYou * 100) / $schedules)}}%</p>
             </div>
             <div class="progress">
-              <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 56%" aria-valuenow="56"
+              <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ number_format(($schedulesForYou * 100) / $schedules)}}%" aria-valuenow="{{ number_format(($schedulesForYou * 100) / $schedules)}}"
                 aria-valuemin="0" aria-valuemax="100"></div>
             </div>
           </div>
@@ -326,6 +259,75 @@
     (function($){
       'use strict';
       $(function(){
+
+        getLocation();
+        function getLocation() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+          }
+        }
+        function showPosition(position) {
+          var latitude  = position.coords.latitude;
+          var longitude = position.coords.longitude;
+          setCookie('lat', latitude, 30);
+          setCookie('long', longitude, 30);
+        }
+
+        //define a function to set cookies
+        function setCookie(name,value,days) {
+          var expires = "";
+          if (days) {
+              var date = new Date();
+              date.setTime(date.getTime() + (days*24*60*60*1000));
+              expires = "; expires=" + date.toUTCString();
+          }
+          document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+        }
+
+        $.get("{{route('home.chart')}}", function(response){
+          var names = new Array();
+          var cvalues = new Array();
+          response.forEach(function(data){
+            console.log(data.total);
+            names.push(data.name);
+            cvalues.push(data.total);
+          });
+          var chartCanvas = $("#chart").get(0).getContext("2d");
+          var doughnutChart = new Chart(chartCanvas, {
+            type: 'doughnut',
+            data: {
+              datasets: [{
+                data: cvalues,
+                backgroundColor: [
+                  'rgba(255, 99, 132, 0.5)',
+                  'rgba(54, 162, 235, 0.5)',
+                  'rgba(255, 206, 86, 0.5)',
+                  'rgba(75, 192, 192, 0.5)',
+                  'rgba(153, 102, 255, 0.5)',
+                  'rgba(255, 159, 64, 0.5)'
+                ],
+                borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+                ],
+              }],
+              labels: names,
+            },
+            options: {
+              responsive: true,
+              animation: {
+                animateScale: true,
+                animateRotate: true
+              }
+            }
+          });
+
+        });
+
         $('.fast-close').each(function(){
           $(this).on('click', function(e){
             var callid = $(this)[0].dataset.callid;

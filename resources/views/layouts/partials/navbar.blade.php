@@ -16,9 +16,9 @@
           <i class="mdi mdi-calendar-clock"></i>Agendamentos
         </a>
       </li>
-      <li class="nav-item {{ Request::is('report*')?'active':''}}">
-        <a href="#" class="nav-link">
-          <i class="mdi mdi-elevation-rise"></i>Relatórios
+      <li class="nav-item {{ Request::is('service-orders*')?'active':''}}">
+        <a href="{{route('so.index')}}" class="nav-link">
+          <i class="mdi mdi-swap-horizontal"></i>Entradas/Saídas
         </a>
       </li>
     </ul>

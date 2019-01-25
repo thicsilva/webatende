@@ -16,16 +16,17 @@ class AccessoriesController extends Controller
     public function store(Request $request)
     {
         $accessory = Accessory::create($request->all());
-        session()->flash('alert', ['accessory' => 'success', 'message' => 'Acessório criado com sucesso']);
+        session()->flash('alert', ['type' => 'success', 'message' => 'Acessório criado com sucesso']);
         return redirect()->back();
     }
 
     public function update(Request $request, Accessory $accessory)
     {
+
         $accessory = Accessory::findOrFail($accessory->id);
         $accessory->fill($request->all());
         $accessory->save();
-        session()->flash('alert', ['accessory' => 'success', 'message' => 'Acessório alterado com sucesso']);
+        session()->flash('alert', ['type' => 'success', 'message' => 'Acessório alterado com sucesso']);
         if ($request->ajax()){
             return response()->json(['success' => true]);
         }
@@ -37,7 +38,7 @@ class AccessoriesController extends Controller
         $accessory = Accessory::findOrFail($accessory->id);
 
         $accessory->delete();
-        session()->flash('alert', ['accessory' => 'success', 'message' => 'Excluído com sucesso']);
+        session()->flash('alert', ['type' => 'success', 'message' => 'Excluído com sucesso']);
         return redirect()->back();
     }
 }

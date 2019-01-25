@@ -26,7 +26,7 @@
       <div class="card">
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table table-striped" id="table">
+            <table class="table table-striped table-sm" id="table">
               <thead>
                 <tr>
                   <th>Descrição</th>
@@ -147,7 +147,7 @@
           var modal = $(e.relatedTarget);
           var id = modal.data('id');
           var description = $(this).find('#description');
-          $('#edit-type').attr('action', "{{ url('types')}}/" + id);
+          $('#edit-type').attr('action', "{{ url('equipment-types')}}/" + id);
           description.val(modal.data('description'));
         })
       })

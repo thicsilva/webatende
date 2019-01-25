@@ -18,16 +18,17 @@ class EquipmentsController extends Controller
     public function store(Request $request)
     {
         $equipment = Equipment::create($request->all());
-        session()->flash('alert', ['equipment' => 'success', 'message' => 'Acessório criado com sucesso']);
+        session()->flash('alert', ['type' => 'success', 'message' => 'Equipamento criado com sucesso']);
         return redirect()->back();
     }
 
     public function update(Request $request, Equipment $equipment)
     {
+
         $equipment = Equipment::findOrFail($equipment->id);
         $equipment->fill($request->all());
         $equipment->save();
-        session()->flash('alert', ['equipment' => 'success', 'message' => 'Acessório alterado com sucesso']);
+        session()->flash('alert', ['type' => 'success', 'message' => 'Equipamento alterado com sucesso']);
         if ($request->ajax()){
             return response()->json(['success' => true]);
         }
@@ -39,7 +40,7 @@ class EquipmentsController extends Controller
         $equipment = Equipment::findOrFail($equipment->id);
 
         $equipment->delete();
-        session()->flash('alert', ['equipment' => 'success', 'message' => 'Excluído com sucesso']);
+        session()->flash('alert', ['type' => 'success', 'message' => 'Excluído com sucesso']);
         return redirect()->back();
     }
 }

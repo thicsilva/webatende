@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Acessórios')
+@section('title', 'Tipos Entrada/Saída')
 @section('css')
 
 @stop
@@ -26,7 +26,7 @@
       <div class="card">
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table table-striped" id="table">
+            <table class="table table-striped table-sm" id="table">
               <thead>
                 <tr>
                   <th>Descrição</th>
@@ -34,17 +34,17 @@
                 </tr>
               </thead>
               <tbody>
-              @foreach($accessories as $accessory)
+              @foreach($movements as $movement)
                 <tr>
-                  <td>{{ $accessory->description }}</td>
+                  <td>{{ $movement->description }}</td>
                   <td class="text-center">
                     <div class="btn-group" role="group">
-                      <a href="#" data-toggle="modal" data-target="#edit" data-id="{{$accessory->id}}" data-description="{{$accessory->description}}" class="btn btn-icons btn-inverse-primary" title="Editar">
+                      <a href="#" data-toggle="modal" data-target="#edit" data-id="{{$movement->id}}" data-description="{{$movement->description}}" class="btn btn-icons btn-inverse-primary" title="Editar">
                         <i class="mdi mdi-pencil"></i>
                       </a>
                     </div>
                     <div class="btn-group" role="group">
-                      <form action="{{ route('accessory.delete', $accessory->id )}}" method="post" class="form-inline">
+                      <form action="{{ route('movement.delete', $movement->id )}}" method="post" class="form-inline">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-icons btn-inverse-danger" type="submit" title="Excluir">
@@ -63,10 +63,10 @@
             <div class="modal fade" id="add" role="dialog" aria-labelledby="commentLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                  <form method="post" action="{{route('accessory.store')}}">
+                  <form method="post" action="{{route('movement.store')}}">
                     @csrf
                     <div class="modal-header">
-                      <h5 class="modal-title" id="commentLabel">Acessórios</h5>
+                      <h5 class="modal-title" id="commentLabel">Entradas/Saídas</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -93,7 +93,7 @@
                     @csrf
                     @method('PUT')
                     <div class="modal-header">
-                      <h5 class="modal-title" id="commentLabel">Acessórios</h5>
+                      <h5 class="modal-title" id="commentLabel">Entradas/Saídas</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -146,7 +146,7 @@
           var modal = $(e.relatedTarget);
           var id = modal.data('id');
           var description = $(this).find('#description');
-          $('#edit-type').attr('action', "{{ url('accessories')}}/" + id);
+          $('#edit-type').attr('action', "{{ url('movements')}}/" + id);
           description.val(modal.data('description'));
         })
       })
