@@ -47,7 +47,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/profile', 'UserController@profile')->name('user.profile');
         Route::put('/profile/save', 'UserController@updateProfile')->name('user.update.profile');
         Route::get('/password', 'UserController@password')->name('user.password');
-        Route::put('/password', 'UserController@updatePassword')->name('user.update.password');
+        Route::put('/password/save', 'UserController@updatePassword')->name('user.update.password');
     });
     Route::group(['prefix' => 'schedule'], function(){
         Route::get('/', 'ScheduleController@index')->name('schedule.index');
