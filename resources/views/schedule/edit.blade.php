@@ -165,8 +165,6 @@
         $('#dates').daterangepicker({
           timePicker: true,
           minDate: moment().startOf('hour'),
-          startDate: moment().startOf('hour'),
-          endDate: moment().startOf('hour').add(32, 'hour'),
           timePicker: true,
           timePicker24Hour: true,
           timePickerIncrement: 15,

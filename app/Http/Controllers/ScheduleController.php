@@ -39,6 +39,11 @@ class ScheduleController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'customer_id' => 'required',
+            'description' => 'required',
+            'dates' => 'required'
+        ]);
         $data = [];
         $dates = explode(' - ', $request->get('dates'));
         $data['customer_id'] = $request->get('customer_id');
@@ -61,6 +66,11 @@ class ScheduleController extends Controller
 
     public function update(Request $request, Schedule $schedule)
     {
+        $request->validate([
+            'customer_id' => 'required',
+            'description' => 'required',
+            'dates' => 'required'
+        ]);
         $data = [];
         $dates = explode(' - ', $request->get('dates'));
         $data['customer_id'] = $request->get('customer_id');

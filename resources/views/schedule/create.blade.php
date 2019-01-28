@@ -46,7 +46,7 @@
               <div class="form-group col-md-6 {{ $errors->has('customer_id') ? 'has-danger' : '' }}">
                 <label for="name">Cliente</label>
                 <div class="input-group">
-                  <select name="customer_id" id="customer_id" class="form-control">
+                  <select name="customer_id" id="customer_id" class="form-control" required>
                   </select>
                   <div class="input-group-append text-white">
                     <button class="btn btn-icons btn-inverse-success" type="button" data-toggle="modal" data-target="#create-customer">
@@ -160,11 +160,16 @@
     (function($){
       'use strict';
       $(function(){
+        let docNumber = document.getElementById('doc_number');
+        let phone = document.getElementById('phone');
+        Inputmask({"mask": ['999.999.999-99', '99.999.999/9999-99'], "keepstatic":true}).mask(docNumber);
+        Inputmask({"mask": ['(99)9999-9999', '(99)99999-9999'], "keepstatic":true}).mask(phone);
+
         $('#dates').daterangepicker({
           timePicker: true,
           minDate: moment().startOf('hour'),
           startDate: moment().startOf('hour'),
-          endDate: moment().startOf('hour').add(32, 'hour'),
+          endDate: moment().startOf('hour').add(2, 'hour'),
           timePicker: true,
           timePicker24Hour: true,
           timePickerIncrement: 15,
