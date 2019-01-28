@@ -74,7 +74,7 @@
                     {{$call->status?'Encerrada':'Aberta'}}
                   </td>
                   <td> {{ $call->toUser->name}}</td>
-                  <td> {{ $call->created_at->format('d/m/Y h:i') }}</td>
+                  <td> {{ $call->created_at->format('d/m/Y H:i') }}</td>
                   <td>
                     <div class="btn-group" role="group">
                       @if (($call->to_user_id == auth()->user()->id or auth()->user()->is_admin) and (!$call->status))

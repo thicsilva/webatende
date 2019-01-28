@@ -23,10 +23,10 @@
             <div class="row">
               <div class="col-md-2">
                 <p class="text-gray">Criado por {{$schedule->fromUser->name }}</p>
-                <img src="{{ asset('storage/' . $schedule->fromUser->avatar )}}" alt="profile image" class="img-sm rounded-circle ml-4">
+                <img src="{{ asset('uploads/users/' . $schedule->fromUser->avatar )}}" alt="profile image" class="img-sm rounded-circle ml-4">
               </div>
               <div class="col-md-8">
-                <h4 class="card-title">{{ $schedule->description }}: {{ $schedule->customer->name }}</h4>
+                <h4 class="card-title">{{ $schedule->description }}: {{ optional($schedule->customer)->name }}</h4>
                 <address>
                   <p>Data Inicial: <strong>{{ $schedule->initial_date->format('d/m/Y \à\s H:i')}}</strong></p>
                   <p>Data Final: <strong>{{ $schedule->final_date->format('d/m/Y \à\s H:i')}}</strong></p>
@@ -35,7 +35,7 @@
               <div class="col-md-2">
                 @if ($schedule->to_user_id)
                   <p class="font-weight-bold">Para {{ $schedule->toUser->name }}</p>
-                  <img src="{{ asset('storage/' . $schedule->toUser->avatar )}}" alt="profile image" class="img-sm rounded-circle ml-4">
+                  <img src="{{ asset('uploads/users/' . $schedule->toUser->avatar )}}" alt="profile image" class="img-sm rounded-circle ml-4">
                 @endif
               </div>
             </div>

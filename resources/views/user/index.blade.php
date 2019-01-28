@@ -34,7 +34,7 @@
               @foreach($users as $user)
                 <tr>
                   <td class="py-1">
-                    <img src="{{ asset('storage/' . $user->avatar)}}" alt="user profile">
+                    <img src="{{ asset('uploads/users/' . $user->avatar)}}" alt="user profile">
                   </td>
                   <td>{{ $user->name }}</td>
                   <td>{{ $user->email }}</td>

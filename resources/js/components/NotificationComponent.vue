@@ -51,7 +51,7 @@
               this.notifications.unshift({
                 title: "Novo chamado",
                 body: call.customer.name,
-                avatar:  this.base_url + 'storage/' + call.fromUser.avatar,
+                avatar:  this.base_url + 'uploads/users/' + call.fromUser.avatar,
                 url: this.base_url + 'call/show/' + call.id,
                 time: new Date(),
               })
@@ -66,7 +66,7 @@
               this.notifications.unshift({
                 title: "Novo agendamento",
                 body: schedule.customer.name,
-                avatar: this.base_url + 'storage/' + schedule.fromUser.avatar,
+                avatar: this.base_url + 'uploads/users/' + schedule.fromUser.avatar,
                 url: this.base_url + 'schedule/show/' + schedule.id,
                 time: new Date(),
               })
