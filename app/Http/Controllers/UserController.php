@@ -60,16 +60,22 @@ class UserController extends Controller
         $request->validate([
             'avatar' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
         ]);
-        $avatar = auth()->user()->avatar;
-        if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
-            if ($user->avatar!=='avatar.png'){
-                Storage::delete('public/'. $user->avatar);
-            }
-            $avatar = $request->file('avatar')->store('public');
-            $avatar = explode('/', $avatar);
-            $avatar = $avatar[1];
 
-            if (!$avatar) {
+        $filename = auth()->user()->avatar;
+        if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
+            $path = public_path() . '/uploads/users/';
+            if ($user->avatar!=='avatar.png'){
+                if (file_exists($path . $user->avatar)){
+                    unlink($path . $user->avatar);
+                }
+            }
+            $avatar = $request->file('avatar');
+            $extension = $avatar->extension();
+            $filename = md5($avatar->getClientOriginalName() . microtime()) . '.' . $extension;
+
+            $avatar->move($path, $filename);
+
+            if (!$filename) {
                 session()->flash('alert', ['type' => 'error', 'message' => 'Não foi possível enviar a imagem']);
                 return redirect()->back();
             }
@@ -77,7 +83,7 @@ class UserController extends Controller
 
         $user->fill([
             'name' => $request->get('name'),
-            'avatar' => $avatar,
+            'avatar' => $filename,
             'show_notification' => $request->has('show_notification'),
             'play_sound' => $request->has('play_sound'),
         ])->save();

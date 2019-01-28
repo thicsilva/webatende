@@ -27,12 +27,12 @@
       <notification user_id="{{auth()->user()->id}}" base_url="{{ asset('') }}" sound_notification="{{ auth()->user()->play_sound }}"></notification>
       @endif
       <audio id="sound-notification">
-        <source src="{{asset('/storage/notify.mp3')}}" type="audio/mpeg">
+        <source src="{{asset('uploads/notify.mp3')}}" type="audio/mpeg">
       </audio>
       <li class="nav-item dropdown d-none d-xl-inline-block">
         <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
           <span class="profile-text">Olá, {{ Auth::user()->name }} !</span>
-          <img class="img-xs rounded-circle" src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="Profile image">
+          <img class="img-xs rounded-circle" src="{{ asset('uploads/users/' . auth()->user()->avatar) }}" alt="Profile image">
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
           <a href="{{ route('user.profile') }}" class="dropdown-item mt-2">
