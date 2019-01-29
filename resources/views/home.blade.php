@@ -123,7 +123,7 @@
           @for($i=1; $i<8; $i++)
               <div class="weakly-weather-item">
               <p class="mb-0">
-                {{strftime('%a', strtotime(now()->addDay($i)))}}
+                {{ utf8_encode(strftime('%a', strtotime(now()->addDay($i))))}}
               </p>
               <img src="http://openweathermap.org/img/w/{{$weather->list[$i]->weather[0]->icon}}.png" alt="$weather->list[$i]->weather[0]->description">
               <p class="mb-0">

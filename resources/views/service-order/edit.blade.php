@@ -276,6 +276,12 @@
       $('#entrance_movement_id').select2({
         placeholder: 'Selecione...'
       });
+      $('#exit_movement_id').select2({
+        placeholder: 'Selecione...'
+      });
+      $('#situation_id').select2({
+        placeholder: 'Selecione...'
+      });
       $('#accessories').select2({
         tags: true,
         tokenSeparators: [',']
