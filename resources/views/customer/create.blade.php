@@ -4,8 +4,6 @@
 
 @section('content')
 
-
-
   <!-- content-wrapper -->
 <div class="content-wrapper">
 @if ($errors->any())

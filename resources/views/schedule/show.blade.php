@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Agendamentos')
+@section('title', 'Exibir Agendamento')
 
 @section('content')
 <!-- content-wrapper -->

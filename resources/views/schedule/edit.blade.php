@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Agendamento')
+@section('title', 'Editar Agendamento')
 @section('css')
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 @stop
