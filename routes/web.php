@@ -105,4 +105,3 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/chart', 'HomeController@chart')->name('home.chart');
-
