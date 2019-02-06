@@ -70,7 +70,7 @@
                   @endif
                   </td>
                   <td>
-                    <span class="status-indicator {{$call->status?'online':'away'}}"></span>
+                    <span class="badge badge-pill {{$call->status?'badge-danger':'badge-success'}}"></span>
                     {{$call->status?'Encerrada':'Aberta'}}
                   </td>
                   <td> {{ $call->toUser->name}}</td>

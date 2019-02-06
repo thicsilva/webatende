@@ -5,6 +5,7 @@
 @section('content')
 <!-- content-wrapper -->
 <div class="content-wrapper">
+
 @if (Session::has('alert'))
   <div class="alert {{session('alert.type')==='success'?'alert-success':'alert-danger'}} alert-dismissible fade show" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -103,6 +104,7 @@
         <div class="card-body">
           <div class="weather-date-location">
             <h3>{{ ucfirst(strftime('%A'))}}</h3>
+
             <p class="text-gray">
               <span class="weather-date">{{strftime('%d de %B, %Y') }}</span>
               <span class="weather-location"> - {{$weather->city->name}}</span>
@@ -146,21 +148,39 @@
           <div class="wrapper">
             <div class="d-flex justify-content-between">
               <p class="mb-2">Seus Atendimentos</p>
+              @if($callsMonth>0)
               <p class="mb-2 text-primary">{{ number_format(($callsForYou * 100) / $callsMonth)}}%</p>
+              @else
+              <p class="mb-2 text-primary">0%</p>
+              @endif
             </div>
             <div class="progress">
+              @if($callsMonth>0)
               <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ number_format(($callsForYou * 100) / $callsMonth)}}%" aria-valuenow="{{ number_format(($callsForYou * 100) / $callsMonth)}}"
                 aria-valuemin="0" aria-valuemax="100"></div>
+              @else
+              <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{$callsMonth}}%" aria-valuenow="{{ $callsMonth}}"
+                aria-valuemin="0" aria-valuemax="100"></div>
+              @endif
             </div>
           </div>
           <div class="wrapper mt-4">
             <div class="d-flex justify-content-between">
               <p class="mb-2">Seus Agendamentos</p>
+              @if ($schedules>0)
               <p class="mb-2 text-success">{{ number_format(($schedulesForYou * 100) / $schedules)}}%</p>
+              @else
+              <p class="mb-2 text-success">{{ $schedules }}%</p>
+              @endif
             </div>
             <div class="progress">
+            @if ($schedules>0)
               <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ number_format(($schedulesForYou * 100) / $schedules)}}%" aria-valuenow="{{ number_format(($schedulesForYou * 100) / $schedules)}}"
                 aria-valuemin="0" aria-valuemax="100"></div>
+            @else
+            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ $schedules}}%" aria-valuenow="{{ $schedules}}"
+                aria-valuemin="0" aria-valuemax="100"></div>
+            @endif
             </div>
           </div>
         </div>
@@ -261,8 +281,41 @@
       $(function(){
 
         getLocation();
-        function getLocation() {
+        /* function getLocation() {
           if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+          }
+        } */
+
+        function getLocation() {
+          if (location.protocol != 'https:') {
+            if (window.chrome) {
+              var position = {
+                coords: {
+                  latitude: '',
+                  longitude: '',
+                }
+              };
+
+              $.getJSON('http://ip-api.com/json', function(data, status){
+                if (status==='success') {
+                  if (data) {
+                    position.coords.latitude = data.lat;
+                    position.coords.longitude = data.lon;
+                    setCookie('lat', data.lat, 30);
+                    setCookie('long', data.lon, 30);
+                    showPosition(position);
+                  } else {
+                    locationOnError();
+                  }
+                } else {
+                  locationOnError();
+                }
+              });
+            } else {
+              navigator.geolocation.getCurrentPosition(showPosition);
+            }
+          } else {
             navigator.geolocation.getCurrentPosition(showPosition);
           }
         }
@@ -288,7 +341,6 @@
           var names = new Array();
           var cvalues = new Array();
           response.forEach(function(data){
-            console.log(data.total);
             names.push(data.name);
             cvalues.push(data.total);
           });
@@ -307,12 +359,12 @@
                   'rgba(255, 159, 64, 0.5)'
                 ],
                 borderColor: [
-                  'rgba(255,99,132,1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)'
+                  'rgba(255,99,132,1)', //rosa
+                  'rgba(54, 162, 235, 1)',//azul
+                  'rgba(255, 206, 86, 1)',//amarelo
+                  'rgba(75, 192, 192, 1)',//verde agua
+                  'rgba(153, 102, 255, 1)',//lilas
+                  'rgba(255, 159, 64, 1)'//laranja
                 ],
               }],
               labels: names,
