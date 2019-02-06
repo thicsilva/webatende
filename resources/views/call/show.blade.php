@@ -53,6 +53,7 @@
             Observações
           </h4>
           <p>Contato: <strong>{{ $call->contact }}</strong></p>
+          <p>Assunto: <strong>{{ $call->subject }}</strong></p>
           <ul>
             <li class="font-weight-semibold {{ $call->customer->has_contract?'text-success':'text-danger'}}">Cliente {{ $call->customer->has_contract?'possui contrato':'não possui contrato'}}</li>
             <li class="font-weight-semibold {{ $call->customer->has_restriction?'text-danger':'text-success'}}">Cliente {{ $call->customer->has_restriction?'possui restrições':'não possui restrições'}}</li>
@@ -61,9 +62,9 @@
             @endif
           </ul>
           @if($call->status)
-            <p>Chamada <mark class="bg-success text-white">Encerrada</mark></p>
+            <p>Chamada <mark class="bg-danger text-white">Encerrada</mark></p>
           @else
-            <p>Chamada <mark class="bg-warning text-white">Aberta</mark></p>
+            <p>Chamada <mark class="bg-success text-white">Aberta</mark></p>
           @endif
         </div>
       </div>
