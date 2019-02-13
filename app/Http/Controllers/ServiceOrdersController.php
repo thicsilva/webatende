@@ -113,6 +113,12 @@ class ServiceOrdersController extends Controller
         return view('service-order.edit', compact('order', 'equipments', 'movements', 'situations', 'accessories'));
     }
 
+    public function show(ServiceOrder $so)
+    {
+        $order = ServiceOrder::findOrFail($so->id);
+        return view('service-order.show', compact('order'));
+    }
+
     public function update(Request $request, ServiceOrder $so)
     {
         $so = ServiceOrder::findOrFail($so->id);

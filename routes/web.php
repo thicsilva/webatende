@@ -94,6 +94,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('create', 'ServiceOrdersController@create')->name('so.create');
         Route::post('/', 'ServiceOrdersController@store')->name('so.store');
         Route::get('/edit/{so}', 'ServiceOrdersController@edit')->name('so.edit');
+        Route::get('/show/{so}', 'ServiceOrdersController@show')->name('so.show');
         Route::put('/{so}', 'ServiceOrdersController@update')->name('so.update');
         Route::delete('/{so}', 'ServiceOrdersController@delete')->name('so.delete');
         Route::post('/status/{so}', 'ServiceOrdersController@status')->name('so.status');

@@ -102,6 +102,10 @@
                         Ações
                       </button>
                       <div class="dropdown-menu">
+                      <a href="{{ route('so.show', $order->id) }}" class="dropdown-item">
+                        <i class="mdi mdi-file-find"></i> Visualizar
+                      </a>
+                      <div class="dropdown-divider"></div>
                       <form action="{{ route('so.status', $order->id )}}" class="status"  method="post" style="display:none">
                         @csrf
                       </form>

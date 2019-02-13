@@ -81,10 +81,6 @@ class HomeController extends Controller
 
     public function chart()
     {
-        $cache = cache('chart');
-        if ($cache){
-            return response()->json($cache);
-        }
 
         $return = DB::table('calls')
             ->select(DB::raw('count(*) as total, users.name'))
@@ -93,7 +89,6 @@ class HomeController extends Controller
             ->whereMonth('calls.created_at', date('m'))
             ->groupBy('users.name')
             ->get();
-        cache(['chart' => $return], now()->addHours(2));
         return response()->json($return);
     }
 
@@ -106,7 +101,7 @@ class HomeController extends Controller
             $lat = '-22.3287233';
             $long = '-49.0763549';
         }
-        $cache = cache('weather');
+        $cache = cache($lat . $long);
         if ($cache){
             return $cache;
         }
@@ -126,7 +121,7 @@ class HomeController extends Controller
         ]);
         $exec = curl_exec($curl);
         $cache = json_decode($exec);
-        cache(['weather'=> $cache], now()->addMinutes(30));
+        cache([$lat . $long => $cache], now()->addMinutes(30));
         return $cache;
     }
 }

@@ -127,7 +127,7 @@
               <p class="mb-0">
                 {{ utf8_encode(strftime('%a', strtotime(now()->addDay($i))))}}
               </p>
-              <img src="http://openweathermap.org/img/w/{{$weather->list[$i]->weather[0]->icon}}.png" alt="$weather->list[$i]->weather[0]->description">
+              <img src="http://openweathermap.org/img/w/{{$weather->list[$i]->weather[0]->icon}}.png" alt="{{ $weather->list[$i]->weather[0]->description }}" title="{{ $weather->list[$i]->weather[0]->description }}">
               <p class="mb-0">
               {{number_format($weather->list[$i]->temp->day)}}&deg;
               </p>
@@ -356,7 +356,10 @@
                   'rgba(255, 206, 86, 0.5)',
                   'rgba(75, 192, 192, 0.5)',
                   'rgba(153, 102, 255, 0.5)',
-                  'rgba(255, 159, 64, 0.5)'
+                  'rgba(255, 159, 64, 0.5)',
+                  'rgba(1, 255, 112, 0.5)',
+                  'rgba(0, 31, 63, 0.5)',
+                  'rgba(133, 20, 75, 0.5)',
                 ],
                 borderColor: [
                   'rgba(255,99,132,1)', //rosa
@@ -364,7 +367,10 @@
                   'rgba(255, 206, 86, 1)',//amarelo
                   'rgba(75, 192, 192, 1)',//verde agua
                   'rgba(153, 102, 255, 1)',//lilas
-                  'rgba(255, 159, 64, 1)'//laranja
+                  'rgba(255, 159, 64, 1)',//laranja
+                  'rgba(1, 255, 112, 1)', //lime
+                  'rgba(0, 31, 63, 1)', //navy
+                  'rgba(133, 20, 75, 1)', //maroon
                 ],
               }],
               labels: names,
