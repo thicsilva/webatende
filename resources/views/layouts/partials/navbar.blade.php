@@ -23,6 +23,29 @@
       </li>
     </ul>
     <ul class="navbar-nav navbar-nav-right">
+      <li class="nav-item dropdown">
+        <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+          <i class="mdi mdi-file-outline"></i>
+          @if($schedules->count()>0)<span class="count">{{$schedules->count()}}</span>@endif
+        </a>
+        @if($schedules->count()>0)
+        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+          @foreach($schedules as $schedule)
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item preview-item">
+            <div class="preview-item-content flex-grow">
+              <h6 class="preview-subject ellipsis font-weight-medium text-dark">{{$schedule->customer->name}}
+                <span class="float-right font-weight-light small-text">{{$schedule->initial_date->diffForHumans()}}</span>
+              </h6>
+              <p class="font-weight-light small-text">
+                {{$schedule->description}}
+              </p>
+            </div>
+          </a>
+          @endforeach
+        </div>
+        @endif
+      </li>
       @if(auth()->user()->show_notification)
       <notification user_id="{{auth()->user()->id}}" base_url="{{ asset('') }}" sound_notification="{{ auth()->user()->play_sound }}"></notification>
       @endif

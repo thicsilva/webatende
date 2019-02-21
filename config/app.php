@@ -175,6 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         geekcom\ValidatorDocs\ValidatorProvider::class,
+        App\Providers\ComposerServiceProvider::class,
 
     ],
 

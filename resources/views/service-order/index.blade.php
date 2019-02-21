@@ -39,7 +39,7 @@
               </div>
               <div class="col">
                 <select name="situation" id="situation" class="form-control">
-                  <option value="">...</option>
+                  <option value="">Selecione...</option>
                 @foreach($situations as $situation)
                   <option value="{{$situation->id}}">{{$situation->description}}</option>
                 @endforeach
