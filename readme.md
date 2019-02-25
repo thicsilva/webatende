@@ -13,7 +13,6 @@ WebAtende é uma aplicação web desenvolvido utilizando o framework Laravel, qu
 * ```php artisan migrate --seed``` para popular o banco de dados
 * ```php artisan serve``` para iniciar a aplicação em http://localhost:8000
 * É criado um usuário e senha padrão com permissão administrador: ```user@user.com``` senha ```123456```
-* Também é possível testar online em http://thicsilva.000webhostapp.com
 
 
 
