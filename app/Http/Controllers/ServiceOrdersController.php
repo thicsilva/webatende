@@ -145,7 +145,8 @@ class ServiceOrdersController extends Controller
             'entrance_movement_id' => $request->entrance_movement_id,
             'exit_movement_id' => $request->exit_movement_id,
             'situation_id' => $request->situation_id,
-            'user_id' => auth()->user()->id
+            'user_id' => auth()->user()->id,
+			'status' => $request->has('status')
         ]);
 
         $so->save();

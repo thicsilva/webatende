@@ -145,6 +145,15 @@
                     <option value="1" {{old('factory', $order->factory)==1?'selected':''}}>Sim</option>
                   </select>
                 </div>
+                <div class="form-group">
+                  <div class="form-check form-check-flat">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" name="status" id="status" value="0" {{ old('status', $order->status)?'':'checked' }}>
+                      Encerrar Entrada/Saída
+                      <i class="input-helper"></i>
+                    </label>
+                  </div>
+                </div>
               </section>
             </div>
           </form>
