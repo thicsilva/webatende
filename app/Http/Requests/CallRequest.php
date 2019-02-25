@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Call;
+use App\Events\CallCreated;
 
 class CallRequest extends FormRequest
 {

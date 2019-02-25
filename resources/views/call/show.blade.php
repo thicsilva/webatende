@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Cadastrar Cliente')
+@section('title', 'Exibir Chamada')
 
 @section('content')
 
@@ -41,6 +41,7 @@
             <p>{{ $call->customer->city }}</p>
             <p>{{ $call->customer->phone }}</p>
             <p>{{ $call->customer->email }}</p>
+            <p class="text-gray"><i>Última atualização: {{$call->customer->updated_at->diffForHumans()}} </i></p>
           </address>
         </div>
       </div>
@@ -51,17 +52,19 @@
           <h4 class="card-title">
             Observações
           </h4>
-          <ul class="list-star">
-            <li class="font-weight-semibold {{ $call->has_contract?'text-success':'text-danger'}}">Cliente {{ $call->has_contract?'possui contrato':'não possui contrato'}}</li>
-            <li class="font-weight-semibold {{ $call->has_restriction?'text-danger':'text-success'}}">Cliente {{ $call->has_restriction?'possui restrições':'não possui restrições'}}</li>
-            @if($call->has_restriction)
-            <li>{{ $call->restriction_annotation }}</li>
+          <p>Contato: <strong>{{ $call->contact }}</strong></p>
+          <p>Assunto: <strong>{{ $call->subject }}</strong></p>
+          <ul>
+            <li class="font-weight-semibold {{ $call->customer->has_contract?'text-success':'text-danger'}}">Cliente {{ $call->customer->has_contract?'possui contrato':'não possui contrato'}}</li>
+            <li class="font-weight-semibold {{ $call->customer->has_restriction?'text-danger':'text-success'}}">Cliente {{ $call->customer->has_restriction?'possui restrições':'não possui restrições'}}</li>
+            @if($call->customer->has_restriction)
+            <li class="font-weight-semibold">{{ $call->customer->restriction_annotation }}</li>
             @endif
           </ul>
           @if($call->status)
-            <p>Chamada <mark class="bg-success text-white">Encerrada</mark></p>
+            <p>Chamada <mark class="bg-danger text-white">Encerrada</mark></p>
           @else
-            <p>Chamada <mark class="bg-warning text-white">Aberta</mark></p>
+            <p>Chamada <mark class="bg-success text-white">Aberta</mark></p>
           @endif
         </div>
       </div>
@@ -76,7 +79,7 @@
             <div class="row ticket-card mt-3 pb-2 border-bottom pb-3 mb-3">
 
               <div class="col-md-1">
-                <img src="{{ asset('images/upload/' . $comment->user->avatar )}}" alt="profile image" class="img-sm rounded-circle mb-4 mb-md-0">
+                <img src="{{ asset('uploads/users/' . $comment->user->avatar )}}" alt="profile image" class="img-sm rounded-circle mb-4 mb-md-0">
               </div>
               <div class="ticket-details col-md-9">
                 <div class="d-flex">
@@ -96,7 +99,7 @@
 
               <div class="ticket-details col-md-2">
                 <div class="btn-group">
-                  @if (auth()->user()->id==$comment->user_id)
+                  @if (auth()->user()->id==$comment->user_id && !$call->status)
                   <form action="{{ route('comment.delete', $comment->id) }}" method="post">
                     @csrf
                     @method('delete')
@@ -113,6 +116,9 @@
             @endforeach
           </div>
           @if(!$call->status)
+          <form action="{{ route('call.close', $call->id) }}" method="post" id="close-call" class="forms-sample" style="display:none">
+          @csrf
+          </form>
           <form action="{{ route('comment.store', $call->id)}}" method="post" class="forms-sample">
             @csrf
             <div class="form-group">
@@ -124,6 +130,9 @@
                 <i class="mdi mdi-message-reply-text"></i>
                 Comentar
               </button>
+              @if($call->comments->count()>0)
+              <a href="#" class="mr-2 btn btn-inverse-dark" onclick="event.preventDefault(); document.getElementById('close-call').submit();"><i class="mdi mdi-close-outline"></i> Encerrar</a>
+              @endif
             </div>
           </form>
           @endif

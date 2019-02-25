@@ -14,6 +14,9 @@ class CommentController extends Controller
         $data['call_id'] = $call->id;
         $data['user_id'] = auth()->user()->id;
         $comment = Comment::create($data);
+        if ($request->ajax()){
+            return response()->json(['success'=>true]);
+        }
         return redirect()->back();
     }
 

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Chamadas para você')
+@section('title', 'Chamadas')
 
 @section('content')
 <!-- content-wrapper -->
@@ -22,16 +22,16 @@
           <form class="forms-sample" action="{{ route('call.index') }}" method="get" id="search-call">
             <div class="row mb-5">
               <div class="col">
-                <input type="text" name="name" id="name" class="form-control" placeholder="Razão" value="{{ Request::input('name') }}">
+                <input type="text" name="customer" id="customer" class="form-control" placeholder="Cliente" value="{{ Request::input('customer') }}">
               </div>
               <div class="col">
-                <input type="text" name="fantasy_name" id="fantasy_name" class="form-control" placeholder="Fantasia" value="{{ Request::input('fantasy_name') }}">
+                <input type="text" name="to_user" id="to_user" class="form-control" placeholder="Para" value="{{ Request::input('to_user') }}">
               </div>
               <div class="col">
-                  <input type="text" name="doc_number" id="doc_number" class="form-control" placeholder="CNPJ/CPF" value="{{ Request::input('doc_number') }}">
+                  <input type="date" name="initial_date" id="initial_date" class="form-control" placeholder="Data Inicial" value="{{ Request::input('initial_date') }}">
               </div>
               <div class="col">
-                <input type="text" name="city" id="city" class="form-control" placeholder="Cidade" value="{{ Request::input('city') }}">
+                <input type="date" name="final_date" id="final_date" class="form-control" placeholder="Data Inicial" value="{{ Request::input('final_date') }}">
               </div>
               <div class="col">
                 <button class="btn btn-inverse-dark">
@@ -43,11 +43,11 @@
           </form>
           <div class="table-responsive">
             <!-- table component -->
-            <table class="table table-striped" id="table">
+            <table class="table sortable-table table-striped table-sm" id="table">
               <thead>
                 <tr>
+                  <th>#ID</th>
                   <th>Cliente</th>
-                  <th>Contato</th>
                   <th>Status</th>
                   <th>Para</th>
                   <th>Data</th>
@@ -58,27 +58,35 @@
                 @foreach($calls as $call)
                 <tr>
                   <td>
-                    <a href="{{ route('call.show', $call->id) }}">{{ $call->customer->name }}</a>
+                    <a href="{{ route('call.show', $call->id) }}">#{{ $call->id }}</a>
                   </td>
-                  <td>{{ $call->contact }}</td>
                   <td>
-                    <span class="status-indicator {{$call->status?'online':'away'}}"></span>
+                    {{ $call->customer->name }}
+                  @if($call->customer->has_contract)
+                    <span class="badge badge-success">Contrato</span>
+                  @endif
+                  @if($call->customer->has_restriction)
+                    <span class="badge badge-danger">Restrição</span>
+                  @endif
+                  </td>
+                  <td>
+                    <span class="badge badge-pill {{$call->status?'badge-danger':'badge-success'}}"></span>
                     {{$call->status?'Encerrada':'Aberta'}}
                   </td>
                   <td> {{ $call->toUser->name}}</td>
-                  <td> {{ $call->created_at->format('d/m/Y h:i') }}</td>
+                  <td> {{ $call->created_at->format('d/m/Y H:i') }}</td>
                   <td>
                     <div class="btn-group" role="group">
                       @if (($call->to_user_id == auth()->user()->id or auth()->user()->is_admin) and (!$call->status))
                       <form action="{{ route('call.close', $call->id) }}" method="post">
                         @csrf
-                        <button class="btn btn-inverse-primary" type="submit">
+                        <button class="btn btn-inverse-dark" type="submit">
                           <i class="mdi mdi-close-outline"></i>
                           Encerrar
                         </button>
                       </form>
                       @else
-                      <a href="{{ route('call.show', $call->id) }}" class="btn btn-inverse-success">
+                      <a href="{{ route('call.show', $call->id) }}" class="btn btn-inverse-primary">
                         <i class="mdi mdi-eye"></i>
                         Visualizar
                       </a>
@@ -118,19 +126,6 @@
     (function($){
       'use strict';
       $(function(){
-        let docNumber = document.getElementById('doc_number');
-        let phone = document.getElementById('phone');
-        Inputmask({"mask": ['999.999.999-99', '99.999.999/9999-99'], "keepstatic":true}).mask(docNumber);
-        Inputmask({"mask": ['(99)9999-9999', '(99)99999-9999'], "keepstatic":true}).mask(phone);
-        $('#restriction').hide();
-
-        $('#has_restriction').on('click', function(){
-          if (this.checked){
-            $('#restriction').show();
-          } else {
-            $('#restriction').hide();
-          }
-        });
 
         $('.btn-inverse-danger').each(function(){
           $(this).on('click', function(e){

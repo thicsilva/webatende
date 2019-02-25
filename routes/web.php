@@ -37,8 +37,72 @@ Route::middleware(['auth'])->group(function(){
         Route::post('comment/{call}', 'CommentController@store')->name('comment.store');
         Route::delete('comment/{comment}', 'CommentController@delete')->name('comment.delete');
     });
+    Route::group(['prefix' => 'user'], function(){
+        Route::group(['middleware' => 'admin'], function(){
+            Route::get('/', 'UserController@index')->name('user.index');
+            Route::get('/edit/{user}', 'UserController@edit')->name('user.edit');
+            Route::put('/{user}', 'UserController@update')->name('user.update');
+            Route::delete('/{user}', 'UserController@delete')->name('user.delete');
+        });
+        Route::get('/profile', 'UserController@profile')->name('user.profile');
+        Route::put('/profile/save', 'UserController@updateProfile')->name('user.update.profile');
+        Route::get('/password', 'UserController@password')->name('user.password');
+        Route::put('/password/save', 'UserController@updatePassword')->name('user.update.password');
+    });
+    Route::group(['prefix' => 'schedule'], function(){
+        Route::get('/', 'ScheduleController@index')->name('schedule.index');
+        Route::get('create', 'ScheduleController@create')->name('schedule.create');
+        Route::post('/', 'ScheduleController@store')->name('schedule.store');
+        Route::get('/edit/{schedule}', 'ScheduleController@edit')->name('schedule.edit');
+        Route::put('/{schedule}', 'ScheduleController@update')->name('schedule.update');
+        Route::delete('/{schedule}', 'ScheduleController@delete')->name('schedule.delete');
+        Route::get('show/{schedule}', 'ScheduleController@show')->name('schedule.show');
+        Route::get('/json', 'ScheduleController@fetchAll')->name('schedule.json');
+    });
+    Route::group(['prefix' => 'accessories'], function(){
+        Route::get('/', 'AccessoriesController@index')->name('accessory.index');
+        Route::post('/', 'AccessoriesController@store')->name('accessory.store');
+        Route::put('/{accessory}', 'AccessoriesController@update')->name('accessory.update');
+        Route::delete('/{accessory}', 'AccessoriesController@delete')->name('accessory.delete');
+    });
+    Route::group(['prefix' => 'equipments'], function(){
+        Route::get('/', 'EquipmentsController@index')->name('equipment.index');
+        Route::post('/', 'EquipmentsController@store')->name('equipment.store');
+        Route::put('/{equipment}', 'EquipmentsController@update')->name('equipment.update');
+        Route::delete('/{equipment}', 'EquipmentsController@delete')->name('equipment.delete');
+    });
+    Route::group(['prefix' => 'situations'], function(){
+        Route::get('/', 'SituationsController@index')->name('situation.index');
+        Route::post('/', 'SituationsController@store')->name('situation.store');
+        Route::put('/{situation}', 'SituationsController@update')->name('situation.update');
+        Route::delete('/{situation}', 'SituationsController@delete')->name('situation.delete');
+    });
+    Route::group(['prefix' => 'equipment-types'], function(){
+        Route::get('/', 'TypesController@index')->name('type.index');
+        Route::post('/', 'TypesController@store')->name('type.store');
+        Route::put('/{type}', 'TypesController@update')->name('type.update');
+        Route::delete('/{type}', 'TypesController@delete')->name('types.delete');
+    });
+    Route::group(['prefix' => 'movements'], function(){
+        Route::get('/', 'MovementsController@index')->name('movement.index');
+        Route::post('/', 'MovementsController@store')->name('movement.store');
+        Route::put('/{movement}', 'MovementsController@update')->name('movement.update');
+        Route::delete('/{movement}', 'MovementsController@delete')->name('movement.delete');
+    });
+    Route::group(['prefix' => 'service-orders'], function(){
+        Route::get('/', 'ServiceOrdersController@index')->name('so.index');
+        Route::get('create', 'ServiceOrdersController@create')->name('so.create');
+        Route::post('/', 'ServiceOrdersController@store')->name('so.store');
+        Route::get('/edit/{so}', 'ServiceOrdersController@edit')->name('so.edit');
+        Route::get('/show/{so}', 'ServiceOrdersController@show')->name('so.show');
+        Route::put('/{so}', 'ServiceOrdersController@update')->name('so.update');
+        Route::delete('/{so}', 'ServiceOrdersController@delete')->name('so.delete');
+        Route::post('/status/{so}', 'ServiceOrdersController@status')->name('so.status');
+    });
+
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/chart', 'HomeController@chart')->name('home.chart');

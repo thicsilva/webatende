@@ -11,7 +11,7 @@ const mix = require('laravel-mix');
  |
  */
 mix.js('resources/js/*.js', 'public/js')
-   .extract(['jquery', 'popper.js', 'bootstrap'])
+   .extract(['jquery', 'popper.js', 'bootstrap', 'fullcalendar'])
    .sass('resources/sass/app.scss', 'public/css');
 if (mix.inProduction()){
     mix.version();

@@ -33,4 +33,10 @@ class Call extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function delete()
+    {
+        $this->comments()->delete();
+        parent::delete();
+    }
 }

@@ -13,7 +13,8 @@ try {
     window.swal = require('sweetalert');
     window.Inputmask = require('inputmask');
     window.select2 = require('select2');
-
+    window.moment = require('moment');
+    require('fullcalendar');
     require('bootstrap');
 } catch (e) {}
 

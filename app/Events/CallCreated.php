@@ -34,7 +34,7 @@ class CallCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('calls');
+        return ['events'];
     }
 
     public function broadcastWith()
@@ -46,11 +46,17 @@ class CallCreated implements ShouldBroadcast
             ],
             'contact' => $this->call->contact,
             'status' => $this->call->status,
-            'to_user' => [
+            'fromUser' => [
+                'id' => $this->call->from_user_id,
+                'name' => $this->call->fromUser->name,
+                'avatar' => $this->call->fromUser->avatar,
+            ],
+            'toUser' => [
+                'id' => $this->call->to_user_id,
                 'name' => $this->call->toUser->name,
             ],
-            'created_at' => $this->call->created_at,
-            'updated_at' => $this->call->updated_at,
+            'created_at' => $this->call->created_at->format('Y-m-d H:i:s'),
+            'updated_at' => $this->call->updated_at->format('Y-m-d H:i:s'),
         ];
     }
 }

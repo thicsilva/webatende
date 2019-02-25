@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Cadastrar Cliente')
+@section('title', 'Cadastrar Chamada')
 
 @section('content')
   <!-- content-wrapper -->
@@ -81,7 +81,7 @@
   </div>
 </div>
 <!-- The Modal -->
-<div class="modal" id="create-customer">
+<div class="modal fade" id="create-customer">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <!-- Modal Header -->
@@ -162,9 +162,14 @@
     'use strict';
 
     $(function(){
+      let docNumber = document.getElementById('doc_number');
+      let phone = document.getElementById('phone');
+      Inputmask({"mask": ['999.999.999-99', '99.999.999/9999-99'], "keepstatic":true}).mask(docNumber);
+      Inputmask({"mask": ['(99)9999-9999', '(99)99999-9999'], "keepstatic":true}).mask(phone);
+
       $('#customer_id').select2({
-        mimimumInputLenght: 2,
-        tags: [],
+        minimumInputLength: 3,
+        allowClear: true,
         ajax: {
           url: "{{ route('customer.search') }}",
           dataType: 'json',
@@ -176,10 +181,12 @@
           },
           processResults: function(data){
             return {
-              results: $.map(data, function (item){
+              results: $.map(data, function(item) {
                 return {
                   text: item.name,
-                  id: item.id
+                  city: item.city,
+                  docNumber: item.doc_number,
+                  id: item.id,
                 }
               })
             };
@@ -188,11 +195,38 @@
         },
         placeholder: 'Digite Razão, Fantasia ou CNPJ',
         escapeMarkup: function (markup) { return markup; },
-        minimumInputLength: 2,
-
+        templateResult: formatRepo,
+        templateSelection: formatRepoSelection,
+        language: 'pt'
       });
 
       $('#to_user_id').select2();
+
+      function formatRepo (repo) {
+        if (repo.loading) {
+          return repo.text;
+        }
+
+        var markup = "<div class='select2-result-repository clearfix'>" +
+          "<div class='select2-result-repository__meta'>" +
+            "<div class='select2-result-repository__title'>" + repo.text + "</div>";
+
+        if (repo.city) {
+          markup += "<div class='select2-result-repository__description text-gray'>" + repo.city + "</div>";
+        }
+
+        markup += "<div class='select2-result-repository__statistics'>" +
+          "<div class='select2-result-repository__forks text-gray'><small>" + repo.docNumber + "</small></div>" +
+        "</div>" +
+        "</div>"+
+        "</div>";
+
+        return markup;
+      }
+
+      function formatRepoSelection (repo) {
+        return repo.text;
+      }
 
     })
   })(jQuery);

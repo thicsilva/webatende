@@ -5,7 +5,7 @@
       <div class="nav-link">
         <div class="user-wrapper">
           <div class="profile-image">
-            <img src="{{ asset('images/faces/face1.jpg') }}" alt="profile image">
+            <img src="{{ asset('uploads/users/' . auth()->user()->avatar) }}" alt="profile image">
           </div>
           <div class="text-wrapper">
             <p class="profile-name">{{Auth::user()->name}}</p>
@@ -25,6 +25,32 @@
         <i class="menu-icon mdi mdi-television"></i>
         <span class="menu-title">Dashboard</span>
       </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" href="#ui-register" aria-expanded="{{request()->is('accessories*', 'equipments*', 'situations*', 'equipment-types*', 'movements*')?'true':'false'}}" aria-controls="ui-customer">
+        <i class="menu-icon mdi mdi-plus-one"></i>
+        <span class="menu-title">Cadastros</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse {{request()->is('accessories*', 'equipments*', 'situations*', 'equipment-types*', 'movements*')?'show':''}}" id="ui-register">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a class="nav-link {{request()->is('accessories*')?'active':''}}" href="{{route('accessory.index')}}">Acessórios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{request()->is('equipments*')?'active':''}}" href="{{route('equipment.index')}}">Equipamentos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{request()->is('situations*')?'active':''}}" href="{{route('situation.index')}}">Situações</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{request()->is('equipment-types*')?'active':''}}" href="{{route('type.index')}}">Tipos de Equipamento</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{request()->is('movements*')?'active':''}}" href="{{route('movement.index')}}">Tipos Entrada/Saída</a>
+          </li>
+        </ul>
+      </div>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" href="#ui-customer" aria-expanded="{{request()->is('customer*')?'true':'false'}}" aria-controls="ui-customer">
@@ -52,7 +78,7 @@
       <div class="collapse {{request()->is('call*')?'show':''}}" id="ui-call">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item">
-            <a class="nav-link {{request()->is('call')?'active':''}}" href="{{ route('call.index') }}">Todos</a>
+            <a class="nav-link {{request()->is('call')?'active':''}}" href="{{ route('call.index') }}">Todas</a>
           </li>
           <li class="nav-item">
             <a class="nav-link {{request()->is('call/for-you')?'active':''}}" href="{{ route('call.foryou') }}">Para Você</a>
@@ -60,6 +86,14 @@
         </ul>
       </div>
     </li>
+    @if (auth()->user()->is_admin)
+    <li class="nav-item {{request()->is('user')?'active':''}}">
+      <a class="nav-link" href="{{ route('user.index') }}">
+        <i class="menu-icon mdi mdi-account-multiple"></i>
+          Usuários
+      </a>
+    </li>
+    @endif
   </ul>
 </nav>
 <!-- end sidebar -->

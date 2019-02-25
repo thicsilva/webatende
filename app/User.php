@@ -36,9 +36,19 @@ class User extends Authenticatable
         'created_at', 'updated_at',
     ];
 
-    public function calls()
+    public function isAdmin()
     {
-        return $this->hasMany(Call::class);
+        return $this->is_admin;
+    }
+
+    public function callsFrom()
+    {
+        return $this->hasMany(Call::class, 'from_user_id');
+    }
+
+    public function callsTo()
+    {
+        return $this->hasMany(Call::class, 'to_user_id');
     }
 
     public function comments()
@@ -46,9 +56,17 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
+
     public function schedules()
     {
         return $this->hasMany(Schedule::class);
+    }
+
+    public function delete()
+    {
+        $this->callsFrom()->delete();
+        $this->callsTo()->delete();
+        parent::delete();
     }
 
 }
