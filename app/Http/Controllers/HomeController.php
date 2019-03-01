@@ -56,12 +56,12 @@ class HomeController extends Controller
             $compareMonth = (($callsMonth - $callsMonthBefore) / $callsMonthBefore) * 100;
         }
 
-        $schedules = Schedule::whereYear('created_at', date('Y'))
-            ->whereMonth('created_at', date('m'))
-            ->count();
+        $schedules = Schedule::whereYear('initial_date', date('Y'))
+            ->whereMonth('initial_date', date('m'))
+            ->count();        
 
-        $schedulesForYou = Schedule::whereYear('created_at', date('Y'))
-            ->whereMonth('created_at', date('m'))
+        $schedulesForYou = Schedule::whereYear('initial_date', date('Y'))
+            ->whereMonth('initial_date', date('m'))
             ->where('to_user_id', auth()->user()->id)
             ->count();
 
