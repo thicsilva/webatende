@@ -59,6 +59,7 @@
       $(function(){
         $('#calendar').fullCalendar({
           locale: 'pt',
+          firstDay: 0,
           header: {
             left: 'prev,next today',
             center: 'title',
