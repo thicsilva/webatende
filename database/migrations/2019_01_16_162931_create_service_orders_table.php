@@ -30,6 +30,7 @@ class CreateServiceOrdersTable extends Migration
             $table->boolean('status')->default(1);
             $table->integer('situation_id');
             $table->integer('user_id');
+            $table->longText('budget')->nullable();
             $table->timestamps();
         });
     }

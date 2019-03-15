@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class ServiceOrder extends Model
 {
     protected $fillable = ['customer_id', 'contact', 'equipment_id',
-    'serial', 'entrance_movement_id', 'entrance_date',
-    'factory', 'documents', 'fault', 'exit_date', 'exit_movement_id', 'status', 'user_id' ,'situation_id', 'os_number'];
+    'serial', 'entrance_movement_id', 'entrance_date', 'budget',
+    'factory', 'documents', 'fault', 'exit_date', 'exit_movement_id',
+    'status', 'user_id' ,'situation_id', 'os_number'];
 
     protected $dates = ['created_at', 'updated_at', 'entrance_date', 'exit_date'];
 

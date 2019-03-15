@@ -146,6 +146,7 @@ class ServiceOrdersController extends Controller
             'exit_movement_id' => $request->exit_movement_id,
             'situation_id' => $request->situation_id,
             'user_id' => auth()->user()->id,
+            'budget' => $request->budget,
 			'status' => !$request->has('status')
         ]);
 

@@ -106,7 +106,7 @@
             <h3>{{ ucfirst(strftime('%A'))}}</h3>
 
             <p class="text-gray">
-              <span class="weather-date">{{strftime('%d de %B, %Y') }}</span>
+              <span class="weather-date">{{ utf8_encode(strftime('%d de %B, %Y')) }}</span>
               <span class="weather-location"> - {{$weather->city->name}}</span>
             </p>
           </div>
