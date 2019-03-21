@@ -41,7 +41,7 @@
             <p>{{ $call->customer->city }}</p>
             <p>{{ $call->customer->phone }}</p>
             <p>{{ $call->customer->email }}</p>
-            <p class="text-gray"><i>Última atualização: {{$call->customer->updated_at->diffForHumans()}} </i></p>
+            <p class="text-gray"><i>Última atualização: {{optional($call->customer->updated_at)->diffForHumans()}} </i></p>
           </address>
         </div>
       </div>
@@ -70,6 +70,24 @@
       </div>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-md-12 stretch-card grid-margin">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Orçamento</h4>
+          @if(!$call->status && $call->toUser->id == auth()->user()->id)
+            @if($call->budgets->count()>0)
+            <a href="{{route('budget.edit', $call->budgets->first()->id)}}" class="btn btn-info">Editar orçamento</a>
+            @else
+            <a href="{{route('budget.create', $call->id)}}" class="btn btn-info">Inserir orçamento</a>
+            @endif
+          @endif
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-md-12 stretch-card grid-margin">
       <div class="card">

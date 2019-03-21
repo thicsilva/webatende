@@ -19,19 +19,10 @@
       <div class="card">
         <div class="card-body">
           <h4 class="class-title">Pesquisar</h4>
-          <form class="forms-sample" action="{{ route('call.index') }}" method="get" id="search-call">
+          <form class="forms-sample" action="{{ route('budget.index') }}" method="get" id="search-call">
             <div class="row mb-5">
               <div class="col">
-                <input type="text" name="customer" id="customer" class="form-control" placeholder="Cliente" value="{{ Request::input('customer') }}">
-              </div>
-              <div class="col">
-                <input type="text" name="to_user" id="to_user" class="form-control" placeholder="Para" value="{{ Request::input('to_user') }}">
-              </div>
-              <div class="col">
-                  <input type="date" name="initial_date" id="initial_date" class="form-control" placeholder="Data Inicial" value="{{ Request::input('initial_date') }}">
-              </div>
-              <div class="col">
-                <input type="date" name="final_date" id="final_date" class="form-control" placeholder="Data Inicial" value="{{ Request::input('final_date') }}">
+                <input type="text" name="term" id="term" class="form-control" placeholder="Cliente" value="{{ Request::input('term') }}">
               </div>
               <div class="col">
                 <button class="btn btn-inverse-dark">
@@ -48,56 +39,41 @@
                 <tr>
                   <th>#ID</th>
                   <th>Cliente</th>
-                  <th>Status</th>
-                  <th>Para</th>
-                  <th>Data</th>
+                  <th>Contato</th>
+                  <th>Documento</th>
+                  <th>Anexo</th>
                   <th>Ações</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach($calls as $call)
+                @foreach($budgets as $budget)
                 <tr>
                   <td>
-                    <a href="{{ route('call.show', $call->id) }}">#{{ $call->id }}</a>
+                    <a href="{{ route('budget.show', $budget->id) }}">#{{ $budget->id }}</a>
                   </td>
                   <td>
-                    {{ $call->customer->name }}
-                  @if($call->customer->has_contract)
-                    <span class="badge badge-success">Contrato</span>
-                  @endif
-                  @if($call->customer->has_restriction)
-                    <span class="badge badge-danger">Restrição</span>
-                  @endif
-                  @if($call->budgets()->count()>0)
-                    <a href="{{route('budget.show', $call->budgets()->first())}}"><span class="badge badge-info">Orçamento</span></a>
+                    {{ $budget->customer_name}}
+                  </td>
+                  <td>
+                    {{$budget->customer_contact}}
+                  </td>
+                  <td> {{ $budget->customer_document}}</td>
+                  <td>
+                  @if(!empty($budget->filename))
+                  <a href="{{asset('storage/budgets/' . $budget->filename) }}" target="_blank"><span class="badge badge-info">Visualizar</span></a>
                   @endif
                   </td>
                   <td>
-                    <span class="badge badge-pill {{$call->status?'badge-danger':'badge-success'}}"></span>
-                    {{$call->status?'Encerrada':'Aberta'}}
-                  </td>
-                  <td> {{ $call->toUser->name}}</td>
-                  <td> {{ $call->created_at->format('d/m/Y H:i') }}</td>
-                  <td>
+                  @if($budget->user_id==auth()->user()->id)
                     <div class="btn-group" role="group">
-                      @if (($call->to_user_id == auth()->user()->id or auth()->user()->is_admin) and (!$call->status))
-                      <form action="{{ route('call.close', $call->id) }}" method="post">
-                        @csrf
-                        <button class="btn btn-inverse-dark" type="submit">
-                          <i class="mdi mdi-close-outline"></i>
-                          Encerrar
-                        </button>
-                      </form>
-                      @else
-                      <a href="{{ route('call.show', $call->id) }}" class="btn btn-inverse-primary">
-                        <i class="mdi mdi-eye"></i>
-                        Visualizar
+                      <a href="{{ route('budget.edit', $budget->id) }}" class="btn btn-inverse-primary">
+                        <i class="mdi mdi-pencil"></i>
+                        Editar
                       </a>
-                      @endif
                     </div>
-                    @if($call->fromUser->id==auth()->user()->id)
+
                     <div class="btn-group" role="group">
-                      <form action="{{ route('call.delete', $call->id) }}" method="post">
+                      <form action="{{ route('budget.delete', $budget->id) }}" method="post">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-inverse-danger" type="submit">
@@ -106,6 +82,10 @@
                         </button>
                       </form>
                     </div>
+                    @else
+                      <a href="{{ route('budget.show', $budget->id) }}" class="btn btn-inverse-primary">
+                        <i class="mdi mdi-eye"></i>Visualizar
+                      </a>
                     @endif
                   </td>
                 </tr>
@@ -114,7 +94,7 @@
             </table>
           </div>
           <div class="row mt-5">
-            {{ $calls->appends(Request::except('page'))->links()}}
+            {{ $budgets->appends(Request::except('page'))->links()}}
           </div>
         </div>
       </div>
