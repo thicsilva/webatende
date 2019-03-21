@@ -78,9 +78,13 @@
           <h4 class="card-title">Orçamento</h4>
           @if(!$call->status && $call->toUser->id == auth()->user()->id)
             @if($call->budgets->count()>0)
-            <a href="{{route('budget.edit', $call->budgets->first()->id)}}" class="btn btn-info">Editar orçamento</a>
+            <a href="{{ route('budget.edit', $call->budgets->first()->id) }}" class="btn btn-info">Editar orçamento</a>
             @else
-            <a href="{{route('budget.create', $call->id)}}" class="btn btn-info">Inserir orçamento</a>
+            <a href="{{ route('budget.create', $call->id) }}" class="btn btn-info">Inserir orçamento</a>
+            @endif
+          @else
+            @if($call->budgets->count()>0)
+            <a href="{{ route('budget.show', $call->budgets->first()->id) }}" class="btn btn-info">Visualizar</a>
             @endif
           @endif
         </div>
