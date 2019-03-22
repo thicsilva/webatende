@@ -2,6 +2,11 @@
 
 @section('title', 'Editar Entrada')
 
+@section('css')
+<!-- include summernote css/js -->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
+@stop
+
 @section('content')
   <!-- content-wrapper -->
 <div class="content-wrapper">
@@ -127,6 +132,14 @@
                   </div>
                 </div>
               </section>
+              <h3>Dados de Orçamento</h3>
+              <section>
+                <h6>Dados de Orçamento</h6>
+                <div class="form-group">
+                  <label for="budget">Preencha com informações sobre o orçamento</label>
+                  <textarea name="budget" id="budget"class="form-control">{!! old('budget', $order->budget) !!}</textarea>
+                </div>
+              </section>
               <h3>Dados Internos</h3>
               <section>
                 <h6>Dados Internos</h6>
@@ -239,6 +252,8 @@
 
 
 @section('js')
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
+
 <script>
   (function($){
     'use strict';
@@ -330,6 +345,8 @@
       });
 
       $('#to_user_id').select2();
+
+      $('#budget').summernote();
 
       function formatRepo (repo) {
         if (repo.loading) {

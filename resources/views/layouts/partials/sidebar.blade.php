@@ -86,6 +86,12 @@
         </ul>
       </div>
     </li>
+    <li class="nav-item {{request()->is('budget*')?'active':''}}">
+      <a href="{{ route('budget.index') }}" class="nav-link">
+        <i class="menu-icon mdi mdi-currency-usd"></i>
+        <span class="menu-title">Orçamentos</span>
+      </a>
+    </li>
     @if (auth()->user()->is_admin)
     <li class="nav-item {{request()->is('user')?'active':''}}">
       <a class="nav-link" href="{{ route('user.index') }}">

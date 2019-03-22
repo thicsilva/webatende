@@ -37,6 +37,12 @@ class Call extends Model
     public function delete()
     {
         $this->comments()->delete();
+        $this->budgets()->delete();
         parent::delete();
+    }
+
+    public function budgets()
+    {
+        return $this->hasMany(Budget::class);
     }
 }

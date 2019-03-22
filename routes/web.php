@@ -100,6 +100,16 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/status/{so}', 'ServiceOrdersController@status')->name('so.status');
     });
 
+    Route::group(['prefix' => 'budget'], function(){
+        Route::get('/', 'BudgetsController@index')->name('budget.index');
+        Route::get('create/{call}', 'BudgetsController@create')->name('budget.create');
+        Route::post('/', 'BudgetsController@store')->name('budget.store');
+        Route::get('/edit/{budget}', 'BudgetsController@edit')->name('budget.edit');
+        Route::put('/{budget}', 'BudgetsController@update')->name('budget.update');
+        Route::delete('/{budget}', 'BudgetsController@delete')->name('budget.delete');
+        Route::get('/show/{budget}', 'BudgetsController@show')->name('budget.show');
+    });
+
 });
 
 Auth::routes();

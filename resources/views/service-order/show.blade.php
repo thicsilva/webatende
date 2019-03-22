@@ -83,6 +83,14 @@
         </div>
       </div>
     </div>
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Dados do Orçamento</h4>
+          {!! $order->budget !!}
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
