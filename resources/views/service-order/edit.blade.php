@@ -161,6 +161,21 @@
                 <div class="form-group">
                   <div class="form-check form-check-flat">
                     <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" name="send-email" id="send-email" value="0" {{ old('send-email')?'':'checked' }}>
+                      Enviar por email
+                      <i class="input-helper"></i>
+                    </label>
+                  </div>
+                  <label for="mail">Selecione o(s) email(s)</label>
+                  <select name="mail[]" id="mail" class="form-control select2" multiple>
+                  @foreach($users as $user)
+                    <option value="{{$user->id}}">{{$user->name}}</option>
+                  @endforeach
+                  </select>
+                </div>
+                <div class="form-group">
+                  <div class="form-check form-check-flat">
+                    <label class="form-check-label">
                       <input type="checkbox" class="form-check-input" name="status" id="status" value="0" {{ old('status', $order->status)?'':'checked' }}>
                       Encerrar Entrada/Saída
                       <i class="input-helper"></i>
@@ -346,7 +361,11 @@
 
       $('#to_user_id').select2();
 
-      $('#budget').summernote();
+      $('#mail').select2({
+        tokenSeparators:[',']
+      })
+
+      $('#budget').summernote('code', "{!! old('budget', $order->budget) !!}");
 
       function formatRepo (repo) {
         if (repo.loading) {

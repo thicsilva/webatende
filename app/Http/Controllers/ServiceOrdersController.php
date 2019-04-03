@@ -8,6 +8,10 @@ use App\Equipment;
 use App\Movement;
 use App\Situation;
 use App\Accessory;
+use App\User;
+use App\Mail\ServiceOrderUpdated;
+use App\Mail\ServiceOrderCreated;
+use Illuminate\Support\Facades\Mail;
 
 class ServiceOrdersController extends Controller
 {
@@ -52,7 +56,8 @@ class ServiceOrdersController extends Controller
         $movements = Movement::all();
         $situations = Situation::all();
         $accessories = Accessory::all();
-        return view('service-order.create', compact('equipments', 'movements', 'situations', 'accessories'));
+        $users = User::all();
+        return view('service-order.create', compact('equipments', 'movements', 'situations', 'accessories', 'users'));
     }
 
     public function store(Request $request)
@@ -85,19 +90,28 @@ class ServiceOrdersController extends Controller
         $accessories = $request->accessories;
 
         $ids = array();
-        foreach ($accessories as $accessory){
-            $exist = Accessory::find($accessory);
-            if(!$exist){
-                $new = Accessory::firstOrCreate(['description' => ucwords(mb_strtolower($accessory))]);
-                if ($new){
-                    $ids[] = $new->id;
+        if(!empty($accessories)){
+
+            foreach ($accessories as $accessory){
+                $exist = Accessory::find($accessory);
+                if(!$exist){
+                    $new = Accessory::firstOrCreate(['description' => ucwords(mb_strtolower($accessory))]);
+                    if ($new){
+                        $ids[] = $new->id;
+                    }
+                } else {
+                    $ids[] = $accessory;
                 }
-            } else {
-                $ids[] = $accessory;
             }
         }
 
         $so->accessories()->sync($ids);
+
+        if ($request->has('send-email') && $request->has('mail')){
+
+            $users = User::find($request->mail)->toArray();
+            Mail::to($users)->send(new ServiceOrderCreated($so));
+        }
 
         session()->flash('alert', ['type'=>'success', 'message' => 'Entrada registrada com sucesso']);
         return redirect()->route('so.index');
@@ -110,7 +124,8 @@ class ServiceOrdersController extends Controller
         $movements = Movement::all();
         $situations = Situation::all();
         $accessories = Accessory::all();
-        return view('service-order.edit', compact('order', 'equipments', 'movements', 'situations', 'accessories'));
+        $users = User::all();
+        return view('service-order.edit', compact('order', 'equipments', 'movements', 'situations', 'accessories', 'users'));
     }
 
     public function show(ServiceOrder $so)
@@ -155,19 +170,28 @@ class ServiceOrdersController extends Controller
         $accessories = $request->accessories;
 
         $ids = array();
-        foreach ($accessories as $accessory){
-            $exist = Accessory::find($accessory);
-            if(!$exist){
-                $new = Accessory::firstOrCreate(['description' => ucwords(mb_strtolower($accessory))]);
-                if ($new){
-                    $ids[] = $new->id;
+
+        if (!empty($accessories)){
+
+            foreach ($accessories as $accessory){
+                $exist = Accessory::find($accessory);
+                if(!$exist){
+                    $new = Accessory::firstOrCreate(['description' => ucwords(mb_strtolower($accessory))]);
+                    if ($new){
+                        $ids[] = $new->id;
+                    }
+                } else {
+                    $ids[] = $accessory;
                 }
-            } else {
-                $ids[] = $accessory;
             }
         }
 
         $so->accessories()->sync($ids);
+
+        if ($request->has('send-email') && $request->has('mail')){
+            $users = User::find($request->mail)->toArray();
+            Mail::to($users)->send(new ServiceOrderUpdated($so));
+        }
 
         session()->flash('alert', ['type'=>'success', 'message' => 'Entrada alterada com sucesso']);
         return redirect()->route('so.index');
@@ -189,5 +213,11 @@ class ServiceOrdersController extends Controller
         $so->status = !$so->status;
         $so->save();
         return redirect()->back();
+    }
+
+    public function mail()
+    {
+        $so = ServiceOrder::findOrFail(1);
+        return (new \App\Mail\ServiceOrderUpdated($so))->render();
     }
 }
