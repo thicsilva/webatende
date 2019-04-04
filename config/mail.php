@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@webatende.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'pat@lpmoretti.com.br'),
         'name' => env('MAIL_FROM_NAME', 'WebAtende'),
     ],
 

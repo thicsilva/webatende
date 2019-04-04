@@ -32,6 +32,6 @@ class ServiceOrderCreated extends Mailable
      */
     public function build()
     {
-        return $this->subject('Nova entrada de equipamento')->locale('pt-BR')->view('service-order.email.create');
+        return $this->subject('Nova entrada de equipamento')->locale('pt-BR')->markdown('service-order.email.create');
     }
 }

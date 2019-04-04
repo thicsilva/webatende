@@ -3,18 +3,22 @@
 
 Algumas informações foram atualizadas
 
+
 @component('mail::table')
 ## Dados internos
-| OS | Documentos | Enviado para fábrica |
+| OS | Documentos | Enviar para fábrica |
 | -- | :---------- | :-------------------- |
 |{{$order->os_number}} | {{$order->documents}} | {{$order->factory?'Sim':'Não'}}
 @endcomponent
+---
 
-@component('mail::panel')
+@component('mail::table')
 ## Dados do cliente
-###{{ $order->customer->name }}
-Contato: {{ $order->contact}}
+| Cliente | Contato |
+| :------ | --------|
+|{{$order->customer->name}}| {{$order->contact}}|
 @endcomponent
+---
 
 @component('mail::table')
 ## Dados da Entrada/Saída
@@ -22,6 +26,7 @@ Contato: {{ $order->contact}}
 | :----------- | --------------- | :--------- | ------------- |
 | {{$order->entrance_date->format('d/m/Y')}} | {{$order->entranceMovement->description}} | {{$order->exit_date?$order->exit_date->format('d/m/Y'):'' }}| {{$order->exit_date?optional($order->exitMovement)->description:''}} |
 @endcomponent
+---
 
 @component('mail::panel')
 ## Dados do relógio
@@ -29,20 +34,23 @@ Contato: {{ $order->contact}}
 | :---------- | ---- |
 |{{$order->equipment->model}}| {{$order->serial}} |
 
-Acessórios:
+### Acessórios:
 
 @foreach($order->accessories as $accessory)
   + {{$accessory->description}}
 @endforeach
 
-Defeito: **{{$order->fault}}**
+### Defeito:
+
+**{{$order->fault}}**
 @endcomponent
+---
 
 @component('mail::panel')
 ## Dados de orçamento
 {!! $order->budget !!}
 @endcomponent
-
+---
 
 Atenciosamente,<br>
 {{ config('app.name') }}

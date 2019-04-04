@@ -218,6 +218,6 @@ class ServiceOrdersController extends Controller
     public function mail()
     {
         $so = ServiceOrder::findOrFail(1);
-        return (new \App\Mail\ServiceOrderUpdated($so))->render();
+        return ( new ServiceOrderUpdated($so))->render();
     }
 }
