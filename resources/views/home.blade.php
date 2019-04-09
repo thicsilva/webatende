@@ -229,9 +229,9 @@
                 <div class="d-flex">
                   <p class="text-gray font-weight-semibold mr-2 mb-0 no-wrap">{{ $call->fromUser->name }}</p>
                   <p class="text-primary mr-1 mb-0"><a href="{{route('call.show', $call->id) }}">#{{ $call->id }}</a></p>
-                  <p class="mb-0 ellipsis">{{ $call->customer->name }}</p>
+                  <p class="mb-0">{{ $call->customer->name }}</p>
                 </div>
-                <p class="text-gray ellipsis mb-2">{{ $call->subject }}
+                <p class="text-gray mb-2">{{ $call->subject }}
                 </p>
                 <div class="row text-gray d-md-flex d-none">
                   <div class="col-4 d-flex">

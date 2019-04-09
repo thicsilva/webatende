@@ -365,7 +365,7 @@
         tokenSeparators:[',']
       })
 
-      $('#budget').summernote('code', "{!! old('budget', $order->budget) !!}");
+      $('#budget').summernote('code', `{!! old('budget', $order->budget) !!}`);
 
       function formatRepo (repo) {
         if (repo.loading) {
