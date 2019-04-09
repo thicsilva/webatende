@@ -204,6 +204,7 @@
 
         $('#customer_id').select2({
           minimumInputLength: 3,
+          language: 'pt-BR',
           allowClear: true,
           ajax: {
             url: "{{ route('customer.search') }}",
