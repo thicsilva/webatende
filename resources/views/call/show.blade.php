@@ -52,6 +52,7 @@
           <h4 class="card-title">
             Observações
           </h4>
+          <p class="text-muted"><small>Criado por: </small> {{$call->fromUser->name}}</p>
           <p>Contato: <strong>{{ $call->contact }}</strong></p>
           <p>Assunto: <strong>{{ $call->subject }}</strong></p>
           <ul>
@@ -107,7 +108,7 @@
                 <div class="d-flex">
                   <p class="text-dark font-weight-semibold mr-2 mb-0 no-wrap">{{ $comment->user->name}}</p>
                 </div>
-                <p class="text-gray ellipsis mb-2">
+                <p class="text-gray mb-2">
                   {{ $comment->comment }}
                 </p>
                 <div class="row text-gray d-md-flex d-none">

@@ -98,6 +98,7 @@ Route::middleware(['auth'])->group(function(){
         Route::put('/{so}', 'ServiceOrdersController@update')->name('so.update');
         Route::delete('/{so}', 'ServiceOrdersController@delete')->name('so.delete');
         Route::post('/status/{so}', 'ServiceOrdersController@status')->name('so.status');
+        Route::get('/email', 'ServiceOrdersController@mail');
     });
 
     Route::group(['prefix' => 'budget'], function(){

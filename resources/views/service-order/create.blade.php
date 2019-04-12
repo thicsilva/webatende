@@ -127,6 +127,21 @@
                     <option value="1">Sim</option>
                   </select>
                 </div>
+                <div class="form-group">
+                  <div class="form-check form-check-flat">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" name="send-email" id="send-email" value="0" {{ old('send-email')?'':'checked' }}>
+                      Enviar por email
+                      <i class="input-helper"></i>
+                    </label>
+                  </div>
+                  <label for="mail">Selecione o(s) email(s)</label>
+                  <select name="mail[]" id="mail" class="form-control select2" multiple>
+                  @foreach($users as $user)
+                    <option value="{{$user->id}}">{{$user->name}}</option>
+                  @endforeach
+                  </select>
+                </div>
               </section>
             </div>
           </form>
@@ -271,8 +286,13 @@
         tokenSeparators: [',']
       });
 
+      $('#mail').select2({
+        tokenSeparators:[',']
+      })
+
       $('#customer_id').select2({
         minimumInputLength: 3,
+        language: 'pt-BR',
         allowClear: true,
         ajax: {
           url: "{{ route('customer.search') }}",

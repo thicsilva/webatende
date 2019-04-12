@@ -70,17 +70,24 @@
           events: function(start,end,timezone,callback){
             $.ajax({
               url: "{{ route('schedule.json') }}",
+              data: {
+                start: start.unix(),
+                end: end.unix(),
+              },
               dataType: 'json',
               success: function(doc){
                 var events = [];
                 $(doc).each(function(){
+                  const color = getRandomColor();
                   events.push({
+
                     title: $(this).attr('description'),
                     start: $(this).attr('initial_date'),
                     end: $(this).attr('final_date'),
                     url: "{{ url('/schedule/show') }}/" + $(this).attr('id'),
                     user: $(this).attr('to_user_id'),
-                    color: getRandomColor(),
+                    color: color+'50',
+                    textColor: color+'ff',
                   });
                 });
                 callback(events);
@@ -101,6 +108,3 @@
     })(jQuery);
   </script>
 @stop
-
-
-

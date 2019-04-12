@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ScheduleCreated;
 use App\Schedule;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use App\Events\ScheduleCreated;
 
 class ScheduleController extends Controller
 {
@@ -26,9 +26,12 @@ class ScheduleController extends Controller
         return view('schedule.index', compact('schedules'));
     }
 
-    public function fetchAll()
+    public function fetchAll(Request $request)
     {
-        $schedules = Schedule::all();
+        $start = Carbon::createFromTimestamp($request->query('start'))->toDateTimeString();
+        $end = Carbon::createFromTimestamp($request->query('end'))->toDateTimeString();
+
+        $schedules = Schedule::whereBetween('initial_date', [$start, $end])->get();
         return response()->json($schedules);
     }
 
@@ -42,7 +45,7 @@ class ScheduleController extends Controller
         $request->validate([
             'customer_id' => 'required',
             'description' => 'required',
-            'dates' => 'required'
+            'dates' => 'required',
         ]);
         $data = [];
         $dates = explode(' - ', $request->get('dates'));
@@ -69,7 +72,7 @@ class ScheduleController extends Controller
         $request->validate([
             'customer_id' => 'required',
             'description' => 'required',
-            'dates' => 'required'
+            'dates' => 'required',
         ]);
         $data = [];
         $dates = explode(' - ', $request->get('dates'));

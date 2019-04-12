@@ -1,4 +1,3 @@
-
 window._ = require('lodash');
 
 /**
@@ -16,6 +15,7 @@ try {
     window.moment = require('moment');
     require('fullcalendar');
     require('bootstrap');
+    require('select2/dist/js/i18n/pt-BR');
 } catch (e) {}
 
 /**
