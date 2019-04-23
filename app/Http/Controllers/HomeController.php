@@ -50,15 +50,15 @@ class HomeController extends Controller
                 ->count();
         }
 
-        if($callsMonthBefore==0){
-            $compareMonth=0;
+        if ($callsMonthBefore == 0) {
+            $compareMonth = 0;
         } else {
             $compareMonth = (($callsMonth - $callsMonthBefore) / $callsMonthBefore) * 100;
         }
 
         $schedules = Schedule::whereYear('initial_date', date('Y'))
             ->whereMonth('initial_date', date('m'))
-            ->count();        
+            ->count();
 
         $schedulesForYou = Schedule::whereYear('initial_date', date('Y'))
             ->whereMonth('initial_date', date('m'))
@@ -73,10 +73,10 @@ class HomeController extends Controller
         $customers = Customer::all()->count();
 
         $weather = $this->weatherStatus();
-        // dd($weather, date('d/m/Y H:i:s', $weather->list[0]->dt));
 
+        $lastMonth = \Carbon\Carbon::now()->subMonth()->formatLocalized('%B');
 
-        return view('home', compact('calls', 'callsMonth', 'compareMonth', 'customers', 'schedules', 'schedulesForYou', 'callsForYou', 'weather'));
+        return view('home', compact('calls', 'callsMonth', 'compareMonth', 'customers', 'schedules', 'schedulesForYou', 'callsForYou', 'weather', 'lastMonth'));
     }
 
     public function chart()
@@ -94,7 +94,7 @@ class HomeController extends Controller
 
     protected function weatherStatus()
     {
-        if (isset($_COOKIE['lat']) && isset($_COOKIE['long'])){
+        if (isset($_COOKIE['lat']) && isset($_COOKIE['long'])) {
             $lat = $_COOKIE['lat'];
             $long = $_COOKIE['long'];
         } else {
@@ -102,7 +102,7 @@ class HomeController extends Controller
             $long = '-49.0763549';
         }
         $cache = cache($lat . $long);
-        if ($cache){
+        if ($cache) {
             return $cache;
         }
         $url = 'http://api.openweathermap.org/data/2.5/forecast/daily?';

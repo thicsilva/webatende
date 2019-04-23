@@ -68,7 +68,7 @@
           <div class="row">
             <div class="col-12 text-center">
             @foreach($situations as $situation)
-              <label class="badge" style="background-color:{{$situation->color}}">{{$situation->description}} <span class="badge badge-dark">{{$situation->serviceOrders->count()}}</span></label>
+              <label class="badge" style="background-color:{{$situation->color}}">{{$situation->description}} <span class="badge badge-dark">{{$situation->activeServiceOrders}}</span></label>
             @endforeach
             </div>
           </div>
@@ -181,6 +181,3 @@
     })(jQuery);
   </script>
 @stop
-
-
-
