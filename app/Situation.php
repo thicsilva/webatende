@@ -12,4 +12,9 @@ class Situation extends Model
     {
         return $this->hasMany(ServiceOrder::class);
     }
+
+    protected function getActiveServiceOrdersAttribute($value)
+    {
+        return $value ?? $this->activeServiceOrders = $this->serviceOrders()->where('status', 1)->count();
+    }
 }

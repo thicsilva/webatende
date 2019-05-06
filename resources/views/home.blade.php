@@ -31,7 +31,7 @@
             </div>
           </div>
           <p class="text-muted mt-3 mb-0">
-            <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> {{ number_format(abs($compareMonth)) }}% {{$compareMonth<0?'menos':'mais'}} que {{ ucfirst(strftime('%B', strtotime('-1 month'))) }}
+            <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> {{ number_format(abs($compareMonth)) }}% {{$compareMonth<0?'menos':'mais'}} que {{ utf8_encode(ucfirst($lastMonth)) }}
           </p>
         </div>
       </div>
@@ -125,7 +125,7 @@
           @for($i=1; $i<8; $i++)
               <div class="weakly-weather-item">
               <p class="mb-0">
-                {{ utf8_encode(strftime('%a', strtotime(now()->addDay($i))))}}
+                {{ utf8_encode(\Carbon\Carbon::now()->addDay($i)->formatLocalized('%a')) }}
               </p>
               <img src="http://openweathermap.org/img/w/{{$weather->list[$i]->weather[0]->icon}}.png" alt="{{ $weather->list[$i]->weather[0]->description }}" title="{{ $weather->list[$i]->weather[0]->description }}">
               <p class="mb-0">
