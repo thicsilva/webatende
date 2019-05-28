@@ -10,7 +10,7 @@ class ScheduleComposer
 
     public function __construct()
     {
-        $this->schedules = Schedule::whereRaw('date(initial_date)="'. date('Y-m-d') . '"')->get();
+        $this->schedules = Schedule::whereRaw('date(initial_date)<=date(now())')->get();
     }
 
     public function compose(View $view)
