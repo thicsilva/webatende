@@ -12,7 +12,7 @@ class ScheduleController extends Controller
 {
     public function __construct()
     {
-        $users = User::all();
+        $users = User::active()->orderBy('name')->get();
         view()->share('users', $users);
     }
 

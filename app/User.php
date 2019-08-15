@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class User extends Authenticatable
 {
@@ -15,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'avatar', 'show_notification', 'play_sound', 'is_admin',
+        'name', 'email', 'password', 'avatar', 'show_notification', 'play_sound', 'is_admin', 'active'
     ];
 
     /**
@@ -68,5 +71,12 @@ class User extends Authenticatable
         $this->callsTo()->delete();
         parent::delete();
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
+
+    
 
 }

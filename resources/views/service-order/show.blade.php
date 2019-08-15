@@ -51,6 +51,11 @@
           <p>Data Saída: <strong>{{ optional($order->exit_date)->format('d/m/Y')}} </strong>  </p>
           <p>Tipo de Saída: <strong>{{optional($order->exitMovement)->description}}</strong></p>
           @endif
+          @if($order->created_at==$order->updated_at)
+            <p class="text-muted"><small>Criado por: </small> {{$order->user->name}} em {{$order->updated_at->format('d/m/Y \à\s H:i')}}</p>
+          @else
+            <p class="text-muted"><small>Atualizado por: </small> {{$order->user->name}} em {{$order->updated_at->format('d/m/Y \à\s H:i')}}</p>
+          @endif
         </div>
       </div>
     </div>

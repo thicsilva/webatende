@@ -58,6 +58,13 @@
                   </div>
                   <div class="form-check form-check-flat">
                     <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" name="active" id="active" value="1" {{ old('active', $user->active)?'checked':'' }}>
+                      Usuário Ativo
+                      <i class="input-helper"></i>
+                    </label>
+                  </div>
+                  <div class="form-check form-check-flat">
+                    <label class="form-check-label">
                       <input type="checkbox" class="form-check-input" name="show_notification" id="show_notification" value="1" {{ old('show_notification', $user->show_notification)?'checked':'' }}>
                       Exibir notificações
                       <i class="input-helper"></i>

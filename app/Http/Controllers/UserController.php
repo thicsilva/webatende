@@ -14,7 +14,7 @@ class UserController extends Controller
         if (!auth()->user()->is_admin) {
             return redirect()->route('home');
         }
-        $users = User::all();
+        $users = User::active()->orderBy('name')->get();
         return view('user.index', compact('users'));
     }
 

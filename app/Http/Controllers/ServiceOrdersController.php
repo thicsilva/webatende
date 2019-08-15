@@ -56,7 +56,7 @@ class ServiceOrdersController extends Controller
         $movements = Movement::all();
         $situations = Situation::all();
         $accessories = Accessory::all();
-        $users = User::all();
+        $users = User::active()->orderBy('name')->get();
         return view('service-order.create', compact('equipments', 'movements', 'situations', 'accessories', 'users'));
     }
 
@@ -124,7 +124,7 @@ class ServiceOrdersController extends Controller
         $movements = Movement::all();
         $situations = Situation::all();
         $accessories = Accessory::all();
-        $users = User::all();
+        $users = User::active()->orderBy('name')->get();
         return view('service-order.edit', compact('order', 'equipments', 'movements', 'situations', 'accessories', 'users'));
     }
 

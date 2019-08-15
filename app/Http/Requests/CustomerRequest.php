@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Customer;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class CustomerRequest extends FormRequest
 {
@@ -25,7 +24,7 @@ class CustomerRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->method()=='PUT'){
+        if ($this->method() == 'PUT') {
             return [
                 'name' => 'required',
                 'doc_number' => 'required|formato_cpf_cnpj|cpf_cnpj|unique:customers,doc_number,' . $this->segment(2),
@@ -60,7 +59,7 @@ class CustomerRequest extends FormRequest
             'email' => $this->get('email'),
             'has_contract' => $this->has('has_contract'),
             'has_restriction' => $this->has('has_restriction'),
-            'restriction_annotation' => $this->get('restriction_annotation')
+            'restriction_annotation' => $this->get('restriction_annotation'),
         ]);
         $customer->save();
     }

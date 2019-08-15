@@ -34,7 +34,7 @@
           <div class="dropdown-divider"></div>
           <a href="{{route('schedule.show', $schedule->id)}}" class="dropdown-item preview-item">
             <div class="preview-item-content flex-grow">
-              <h6 class="preview-subject font-weight-medium text-dark">{{$schedule->customer->name}}
+              <h6 class="preview-subject font-weight-medium text-dark">{{optional($schedule->customer)->name}}
                 <span class="float-right font-weight-light small-text">{{$schedule->initial_date->diffForHumans()}}</span>
               </h6>
               <p class="font-weight-light small-text">

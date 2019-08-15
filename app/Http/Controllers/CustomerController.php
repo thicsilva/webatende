@@ -11,7 +11,7 @@ class CustomerController extends Controller
 {
     public function __construct()
     {
-        $users = User::all();
+        $users = User::active()->orderBy('name')->get();
         view()->share('users', $users);
     }
 
@@ -19,7 +19,7 @@ class CustomerController extends Controller
     {
         $name = $request->name;
         $fantasyName = $request->fantasy_name;
-        $docNumber = $request->doc_number;
+        $docNumber = preg_replace("/\D/",'',$request->doc_number);
         $city = $request->city;
         $customers = Customer::when($name, function ($q, $name) {
             return $q->where('name', 'like', '%' . $name . '%');
@@ -75,7 +75,7 @@ class CustomerController extends Controller
 
     public function search(Request $request)
     {
-        $query = $request->get('term');
+        $query = $request->get('term');        
         $customer = Customer::where('name', 'like', '%' . $query . '%')
             ->orWhere('fantasy_name', 'like', '%' . $query . '%')
             ->orWhere('doc_number', 'like', '%' . $query . '%')

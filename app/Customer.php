@@ -34,4 +34,8 @@ class Customer extends Model
         $this->calls()->delete();
         parent::delete();
     }
+
+    public function setDocNumberAttribute($value){
+        $this->attributes['doc_number'] = preg_replace("/\D/",'', $value);
+    }
 }

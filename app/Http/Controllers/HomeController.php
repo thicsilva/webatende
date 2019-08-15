@@ -19,7 +19,7 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
 
-        $users = User::all();
+        $users = User::active()->orderBy('name')->get();
         view()->share('users', $users);
 
     }
@@ -85,6 +85,7 @@ class HomeController extends Controller
         $return = DB::table('calls')
             ->select(DB::raw('count(*) as total, users.name'))
             ->join('users', 'users.id', '=', 'calls.to_user_id')
+            ->where('users.active', true)
             ->whereYear('calls.created_at', date('Y'))
             ->whereMonth('calls.created_at', date('m'))
             ->groupBy('users.name')
