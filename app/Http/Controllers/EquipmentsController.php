@@ -9,14 +9,14 @@ use App\Type;
 class EquipmentsController extends Controller
 {
     public function index()
-    {
-        $equipments = Equipment::all();
+    {		
+        $equipments = Equipment::paginate(25);
         $types = Type::all();
         return view('equipment.index', compact('equipments', 'types'));
     }
 
     public function store(Request $request)
-    {
+    {	
         $equipment = Equipment::create($request->all());
         session()->flash('alert', ['type' => 'success', 'message' => 'Equipamento criado com sucesso']);
         return redirect()->back();

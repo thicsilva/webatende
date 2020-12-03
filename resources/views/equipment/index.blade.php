@@ -48,7 +48,7 @@
                       </a>
                     </div>
                     <div class="btn-group" role="group">
-                      <form action="{{ route('equipment.delete', $equipment->id )}}" method="post" class="form-inline">
+                      <form action="{{ route('equipment.delete', $equipment->id )}}" method="post" id="equipment-delete-{{$equipment->id}}" class="form-inline">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-icons btn-inverse-danger" type="submit" title="Excluir">
@@ -61,6 +61,9 @@
               @endforeach
               </tbody>
             </table>
+          </div>
+		  <div class="row mt-5 center">		
+            {{ $equipments->appends(Request::except('page'))->links()}}			
           </div>
           <div class="row mt-5">
             <!-- Modal -->
@@ -149,8 +152,8 @@
             serial.val(modal.data('serial'));
             type.val(modal.data('type'));
           } else {
-            $('#method').attr('value', '');
-            $('#add-equipment').attr('action', "{{ url('equipments')}}/");
+            $('#method').attr('value', 'POST');
+            $('#add-equipment').attr('action', "{{ route('equipment.store') }}");
             model.val('');
             serial.val('');
             type.val('');

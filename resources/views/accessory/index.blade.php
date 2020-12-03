@@ -58,6 +58,9 @@
               </tbody>
             </table>
           </div>
+		   <div class="row mt-5 center">		
+            {{ $accessories->appends(Request::except('page'))->links()}}			
+          </div>
           <div class="row mt-5">
             <!-- Modal -->
             <div class="modal fade" id="add" role="dialog" aria-labelledby="commentLabel" aria-hidden="true">
