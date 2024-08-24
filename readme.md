@@ -4,15 +4,13 @@ WebAtende é uma aplicação web desenvolvido utilizando o framework Laravel, qu
 
 ## Como testar
 
-* ```git clone https://github.com/thicsilva/webatende.git nomedoprojeto```
-* ```cd nomedoprojeto```
-* ```composer install```
-* ```npm install```
-* ```php artisan key:generate```
-* Crie um banco de dados e informe no arquivo .env
-* ```php artisan migrate --seed``` para popular o banco de dados
-* ```php artisan serve``` para iniciar a aplicação em http://localhost:8000
-* É criado um usuário e senha padrão com permissão administrador: ```user@user.com``` senha ```123456```
-
-
-
+-   `git clone https://github.com/thicsilva/webatende.git nomedoprojeto`
+-   `cd nomedoprojeto`
+-   `composer install`
+-   `npm install`
+-   `php artisan key:generate`
+-   Crie um banco de dados e informe no arquivo .env
+-   `php artisan migrate --seed` para popular o banco de dados
+-   `php artisan serve` para iniciar a aplicação em http://localhost:8000
+-   É criado um usuário e senha padrão com permissão administrador: `user@user.com` senha `123456`
+-   Caso queira, é possível testar em http://webatende.herokuapp.com
